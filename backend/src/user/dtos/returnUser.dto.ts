@@ -1,3 +1,4 @@
+import { ReturnAddressDTO } from '../../address/dtos/returnAddress.dto';
 import {UserEntity} from '../entities/user.entity'
 
 export class ReturnUserDTO {
@@ -6,7 +7,10 @@ export class ReturnUserDTO {
         this.name = userEntity.name,
         this.phone = userEntity.phone,
         this.email = userEntity.email,
-        this.cpf = userEntity.cpf
+        this.cpf = userEntity.cpf,
+        this.addresses = userEntity.addresses 
+        ? userEntity.addresses.map(address => new ReturnAddressDTO(address)) 
+        : undefined
     }
 
     id: number;
@@ -14,4 +18,5 @@ export class ReturnUserDTO {
     email: string;
     phone: string;
     cpf: string;
+    addresses?: ReturnAddressDTO[];
 }

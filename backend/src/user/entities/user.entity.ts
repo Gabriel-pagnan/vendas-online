@@ -1,4 +1,5 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from 'typeorm'
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
+import { AddressEntity } from '../../address/entities/address.entity';
 
 @Entity({name: 'user'})
 export class UserEntity {
@@ -28,4 +29,7 @@ export class UserEntity {
 
     @CreateDateColumn({name: 'updated_at'})
     updatedAt: Date;
+
+    @OneToMany(()=> AddressEntity, (addresses) => addresses.user)
+    addresses?: AddressEntity[]
 }
