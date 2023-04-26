@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadGatewayException } from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm'
 import { hash } from 'bcrypt';
 import { Repository } from 'typeorm';
@@ -11,6 +11,11 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>) {}
 
     async create(data: CreateUserDTO): Promise<UserEntity> {
+        const user = await this.getByEmail(data.email).catch(() => undefined);
+        if(user){
+            throw new BadGatewayException('E-mail já cadastrado');
+        }
+
         const salt = 10;
         const passwordHash = await hash(data.password, salt);
 
@@ -54,7 +59,7 @@ export class UserService {
             }
         });
 
-        if(!user) throw new NotFoundException('E-mail incorreto.')
-        return user
+        if(!user) throw new NotFoundException('E-mail já cadastrado.')
+        return
     }
 }

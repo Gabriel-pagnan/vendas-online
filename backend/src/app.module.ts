@@ -8,6 +8,7 @@ import { createTableAddress1680117902928 } from './migration/1680117902928-creat
 import { alterTableState1680121623186 } from './migration/1680121623186-alter_table_state';
 import { insertInState1680121667606 } from './migration/1680121667606-insert_in_state';
 import { insertInCity1675458752231 } from './migration/1680121683934-insert_in_city';
+import {alterTableUser1682539835524} from './migration/1682539835524-alter-table-user'
 import { UserModule } from './user/user.module';
 import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
@@ -17,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/role.guard';
+import { User2Service } from './user2/user2.service';
 
 @Module({
   imports: [
@@ -38,7 +40,8 @@ import { RolesGuard } from './guards/role.guard';
         createTableAddress1680117902928,
         alterTableState1680121623186,
         insertInState1680121667606,
-        insertInCity1675458752231
+        insertInCity1675458752231,
+        alterTableUser1682539835524
       ],
       migrationsRun: true,
     }),
@@ -54,6 +57,6 @@ import { RolesGuard } from './guards/role.guard';
   providers: [{
     provide: APP_GUARD,
     useClass: RolesGuard
-  }],
+  }, User2Service],
 })
 export class AppModule {}
