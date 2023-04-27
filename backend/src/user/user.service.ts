@@ -11,7 +11,7 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>) {}
 
     async create(data: CreateUserDTO): Promise<UserEntity> {
-        const user = await this.getByEmail(data.email).catch(() => undefined);
+        const user = await this.findUserByEmail(data.email).catch(() => undefined);
         if(user){
             throw new BadGatewayException('E-mail já cadastrado');
         }
@@ -52,14 +52,14 @@ export class UserService {
         return user
     }
 
-    async getByEmail(email: string): Promise<UserEntity>{
+    async findUserByEmail(email: string): Promise<UserEntity>{
         const user = await this.userRepository.findOne({
             where: {
-                email: email
+                email
             }
         });
 
         if(!user) throw new NotFoundException('E-mail já cadastrado.')
-        return
+        return user
     }
 }
