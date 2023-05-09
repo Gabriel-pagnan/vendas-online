@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { CityService } from '../city.service';
 import { CityEntity } from '../entities/city.entity';
 import { CacheService } from '../../cache/cache.service';
-import { async } from 'rxjs';
 import { cityMock } from '../__mocks__/state.mock';
 
 describe('CityService', () => {
