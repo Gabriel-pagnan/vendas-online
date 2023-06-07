@@ -6,7 +6,7 @@ export class CategoryEntity {
     @PrimaryGeneratedColumn('rowid')
     id: number;
 
-    @Column({name: 'state_id', nullable: false})
+    @Column({name: 'name', nullable: false})
     name: string;
 
     @CreateDateColumn({name: 'created_at'})
@@ -16,5 +16,5 @@ export class CategoryEntity {
     updatedAt: Date;
 
     @OneToMany(() => ProductEntity, (product: ProductEntity) => product.category)
-    products: ProductEntity;
+    products?: ProductEntity;
 }
