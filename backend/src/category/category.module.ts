@@ -18,11 +18,8 @@ import { JwtModule } from '@nestjs/jwt';
   ],
   providers: [
     CategoryService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard
-    }
   ],
-  controllers: [CategoryController]
+  controllers: [CategoryController],
+  exports: [CategoryService]
 })
 export class CategoryModule {}

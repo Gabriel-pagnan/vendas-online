@@ -6,11 +6,11 @@ import { UserType } from '../user/enums/enum.type';
 import { CreateCategoryDTO } from './dto/create-category.dto';
 import { CategoryEntity } from './entities/category.entity';
 
+@Roles(UserType.Admin, UserType.User)
 @Controller('category')
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
     
-    @Roles(UserType.Admin)
     @Get()
     async findAllCategories(): Promise<ReturnCategoryDTO[]> {
         return(

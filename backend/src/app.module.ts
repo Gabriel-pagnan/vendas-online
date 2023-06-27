@@ -22,6 +22,7 @@ import { createTableCategory1686147411978 } from './migration/1686147411978-crea
 import { createTableProduct1686147440231 } from './migration/1686147440231-create-table-product';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
+import { insertRootInUser1675770516768 } from './migration/1686321704690-insert-root-in-user';
 
 @Module({
   imports: [
@@ -46,7 +47,8 @@ import { ProductModule } from './product/product.module';
         insertInCity1675458752231,
         alterTableUser1682539835524,
         createTableCategory1686147411978,
-        createTableProduct1686147440231
+        createTableProduct1686147440231,
+        insertRootInUser1675770516768
       ],
       migrationsRun: true,
     }),
