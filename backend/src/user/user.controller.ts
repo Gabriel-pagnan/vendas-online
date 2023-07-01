@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Patch } from '@nestjs/common';
 import { CreateUserDTO } from './dtos/createUser.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
 import { ReturnUserDTO } from './dtos/returnUser.dto';
+import { UpdatePasswordDTO } from './dtos/update-password.dto';
+import { UserId } from '../decorators/user-id.decorator';
 
 @Controller('user')
 export class UserController {
@@ -23,5 +25,10 @@ export class UserController {
     return new ReturnUserDTO(
       await this.userService.getUserReferences(userId)
     );
+  }
+
+  @Patch()
+  async updatePasswordUser(@UserId() id: number, @Body() data: UpdatePasswordDTO): Promise<UserEntity> {
+    return this.userService.updatePasswordUser(data, id)
   }
 }
