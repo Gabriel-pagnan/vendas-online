@@ -23,6 +23,10 @@ import { createTableProduct1686147440231 } from './migration/1686147440231-creat
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { insertRootInUser1675770516768 } from './migration/1686321704690-insert-root-in-user';
+import { createTableCart1675854227354 } from './migration/1688325028110-create-table-cart';
+import { CartModule } from './cart/cart.module';
+import { crateTableCartProduct1675855589039 } from './migration/1688328071862-create-table-cart-product';
+import { CartProductModule } from './cart-product/cart-product.module';
 
 @Module({
   imports: [
@@ -48,7 +52,9 @@ import { insertRootInUser1675770516768 } from './migration/1686321704690-insert-
         alterTableUser1682539835524,
         createTableCategory1686147411978,
         createTableProduct1686147440231,
-        insertRootInUser1675770516768
+        insertRootInUser1675770516768,
+        createTableCart1675854227354,
+        crateTableCartProduct1675855589039
       ],
       migrationsRun: true,
     }),
@@ -60,7 +66,9 @@ import { insertRootInUser1675770516768 } from './migration/1686321704690-insert-
     AuthModule,
     JwtModule,
     CategoryModule,
-    ProductModule
+    ProductModule,
+    CartModule,
+    CartProductModule
   ],
   controllers: [],
   providers: [{
