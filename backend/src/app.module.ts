@@ -27,6 +27,7 @@ import { createTableCart1675854227354 } from './migration/1688325028110-create-t
 import { CartModule } from './cart/cart.module';
 import { crateTableCartProduct1675855589039 } from './migration/1688328071862-create-table-cart-product';
 import { CartProductModule } from './cart-product/cart-product.module';
+import { alterTableCart1675939002410 } from './migration/1688391347945-alter-table-cart';
 
 @Module({
   imports: [
@@ -54,7 +55,8 @@ import { CartProductModule } from './cart-product/cart-product.module';
         createTableProduct1686147440231,
         insertRootInUser1675770516768,
         createTableCart1675854227354,
-        crateTableCartProduct1675855589039
+        crateTableCartProduct1675855589039,
+        alterTableCart1675939002410,
       ],
       migrationsRun: true,
     }),
