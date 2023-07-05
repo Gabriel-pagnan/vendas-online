@@ -71,30 +71,8 @@ export class CartService {
             return this.createCart(userId);
         });
 
-        // await this.cartProductService.insertProductInCart(insertCartDTO, cart);
-
-        return cart;
+        await this.cartProductService.insertProductInCart(insertCartDTO, cart);
+        return this.findCartByUserId(userId, true);
     }
 
-    // async deleteProductCart(
-    //     productId: number,
-    //     userId: number,
-    // ): Promise<DeleteResult> {
-    //     const cart = await this.findCartByUserId(userId);
-
-    //     return this.cartProductService.deleteProductCart(productId, cart.id);
-    // }
-
-    // async updateProductInCart(
-    //     updateCartDTO: UpdateCartDTO,
-    //     userId: number,
-    // ): Promise<CartEntity> {
-    //     const cart = await this.findCartByUserId(userId).catch(async () => {
-    //         return this.createCart(userId);
-    //     });
-
-    //     await this.cartProductService.updateProductInCart(updateCartDTO, cart);
-
-    //     return cart;
-    // }
 }

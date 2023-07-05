@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 import { ProductEntity } from "../../product/entities/producy.entity";
 import { CartEntity } from "../../cart/entities/cart.entity";
 
-@Entity({ name: 'cart-product' })
+@Entity({ name: 'cart_product' })
 export class CartProductEntity {
     @PrimaryGeneratedColumn('rowid')
     id: number;
