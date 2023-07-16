@@ -28,6 +28,10 @@ import { CartModule } from './cart/cart.module';
 import { crateTableCartProduct1675855589039 } from './migration/1688328071862-create-table-cart-product';
 import { CartProductModule } from './cart-product/cart-product.module';
 import { alterTableCart1675939002410 } from './migration/1688391347945-alter-table-cart';
+import { createTableStatus1676207674922 } from './migration/1689530941441-create-table-status';
+import { createTablePayment1676207680454 } from './migration/1689531072924-create-table-payment';
+import { PaymentStatusModule } from './payment-status/payment-status.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -57,6 +61,8 @@ import { alterTableCart1675939002410 } from './migration/1688391347945-alter-tab
         createTableCart1675854227354,
         crateTableCartProduct1675855589039,
         alterTableCart1675939002410,
+        createTableStatus1676207674922,
+        createTablePayment1676207680454
       ],
       migrationsRun: true,
     }),
@@ -70,7 +76,9 @@ import { alterTableCart1675939002410 } from './migration/1688391347945-alter-tab
     CategoryModule,
     ProductModule,
     CartModule,
-    CartProductModule
+    CartProductModule,
+    PaymentStatusModule,
+    PaymentModule
   ],
   controllers: [],
   providers: [{
