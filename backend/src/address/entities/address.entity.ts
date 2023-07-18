@@ -1,6 +1,7 @@
 import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm'
 import { UserEntity } from '../../user/entities/user.entity';
 import { CityEntity } from '../../city/entities/city.entity';
+import { OrderEntity } from '../../order/entities/order.entity';
 
 @Entity({name: 'address'})
 export class AddressEntity {
@@ -34,5 +35,7 @@ export class AddressEntity {
 
     @ManyToOne(() => CityEntity, (city) => city.addresses)
     @JoinColumn({name: 'city_id', referencedColumnName: 'id'})
-    city?: CityEntity
+    city?: CityEntity;
+
+    orders: OrderEntity[]
 }

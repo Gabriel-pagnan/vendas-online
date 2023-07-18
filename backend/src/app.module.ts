@@ -32,6 +32,10 @@ import { createTableStatus1676207674922 } from './migration/1689530941441-create
 import { createTablePayment1676207680454 } from './migration/1689531072924-create-table-payment';
 import { PaymentStatusModule } from './payment-status/payment-status.module';
 import { PaymentModule } from './payment/payment.module';
+import { createTableOrder1676210150319 } from './migration/1689606548136-create-table-order';
+import { createTableOrderProduct1676210155094 } from './migration/1689606676237-create-table-order-product';
+import { OrderModule } from './order/order.module';
+import { OrderProductModule } from './order-product/order-product.module';
 
 @Module({
   imports: [
@@ -62,7 +66,9 @@ import { PaymentModule } from './payment/payment.module';
         crateTableCartProduct1675855589039,
         alterTableCart1675939002410,
         createTableStatus1676207674922,
-        createTablePayment1676207680454
+        createTablePayment1676207680454,
+        createTableOrder1676210150319,
+        createTableOrderProduct1676210155094
       ],
       migrationsRun: true,
     }),
@@ -78,7 +84,9 @@ import { PaymentModule } from './payment/payment.module';
     CartModule,
     CartProductModule,
     PaymentStatusModule,
-    PaymentModule
+    PaymentModule,
+    OrderModule,
+    OrderProductModule
   ],
   controllers: [],
   providers: [{

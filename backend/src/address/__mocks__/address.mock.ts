@@ -11,4 +11,5 @@ export const addressMock: AddressEntity = {
     number: 464,
     updatedAt: new Date(),
     userId: userEntityMock.id,
+    orders: []
 }
