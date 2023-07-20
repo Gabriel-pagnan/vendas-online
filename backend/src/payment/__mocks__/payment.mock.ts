@@ -1,3 +1,4 @@
+import { PaymentType } from '../../payment-status/enums/payment-type.enum';
 import { PaymentEntity } from '../entities/payment.enttity';
 
 export const paymentMock: PaymentEntity = {
@@ -6,7 +7,7 @@ export const paymentMock: PaymentEntity = {
     finalPrice: 64365.4,
     id: 52358,
     price: 32532.0,
-    statusId: 1,
+    statusId: PaymentType.Done,
     updatedAt: new Date(),
     type: '',
 };

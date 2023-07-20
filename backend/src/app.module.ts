@@ -36,6 +36,8 @@ import { createTableOrder1676210150319 } from './migration/1689606548136-create-
 import { createTableOrderProduct1676210155094 } from './migration/1689606676237-create-table-order-product';
 import { OrderModule } from './order/order.module';
 import { OrderProductModule } from './order-product/order-product.module';
+import { insertStatus1676323439062 } from './migration/1689859814580-insert-status';
+import { alterTablePayment1676323446877 } from './migration/1689859832379-alter-table-payment';
 
 @Module({
   imports: [
@@ -68,7 +70,9 @@ import { OrderProductModule } from './order-product/order-product.module';
         createTableStatus1676207674922,
         createTablePayment1676207680454,
         createTableOrder1676210150319,
-        createTableOrderProduct1676210155094
+        createTableOrderProduct1676210155094,
+        insertStatus1676323439062,
+        alterTablePayment1676323446877
       ],
       migrationsRun: true,
     }),
