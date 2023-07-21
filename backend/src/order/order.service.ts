@@ -37,15 +37,19 @@ export class OrderService {
         const payment: PaymentEntity = await this.paymentService.createPayment(data);
         const order = await this.saveOrder(data, userId, payment);
         const cart = await this.cartService.findCartByUserId(userId, true);
+        const products = await this.productService.findAll(cart.cartProduct?.map((cartProduct) => cartProduct.id))
+        console.log(products);
+        
 
-        cart.cartProduct?.forEach((cartProduct) => {
+        await Promise.all(cart.cartProduct?.map((cartProduct) => {
             this.orderProductService.createOrderProduct(
                 cartProduct.productId,
                 order.id,
-                0,
+                products.find((product) => product.id === cartProduct.productId)?.price || 0,
                 cartProduct.amount
             )
-        })
-        return null
+        }));
+
+        return order;
     }
 }

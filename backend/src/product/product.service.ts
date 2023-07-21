@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/producy.entity';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, In, Repository } from 'typeorm';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { CategoryService } from '../category/category.service';
 import { UpdateProductDTO } from './dtos/update-product.dto';
@@ -11,12 +11,22 @@ export class ProductService {
     constructor(
         @InjectRepository(ProductEntity) private readonly productRepository: Repository<ProductEntity>,
         private readonly categoryService: CategoryService
-    ) {}
+    ) { }
 
-    async findAll(): Promise<ProductEntity[]> {
-        const products = await this.productRepository.find();
+    async findAll(productId?: number[]): Promise<ProductEntity[]> {
+        let findOptions = {};
 
-        if(!products || products.length === 0) {
+        if (productId && productId.length > 0) {
+            findOptions = {
+                where: {
+                    id: In(productId),
+                },
+            }
+        }
+
+        const products = await this.productRepository.find(findOptions);
+
+        if (!products || products.length === 0) {
             throw new NotFoundException('Not found produtcs')
         }
         return products
@@ -25,15 +35,15 @@ export class ProductService {
     async createProduct(data: CreateProductDTO): Promise<ProductEntity> {
         await this.categoryService.findCategoryById(data.categoryId);
 
-        return this.productRepository.save({...data})
+        return this.productRepository.save({ ...data })
     }
 
     async findProductById(id: number): Promise<ProductEntity> {
         const product = await this.productRepository.findOne({
-            where: {id: id}
+            where: { id: id }
         })
 
-        if(!product) throw new NotFoundException(`Product id: ${id} not found`)
+        if (!product) throw new NotFoundException(`Product id: ${id} not found`)
         return product
     }
 
@@ -44,6 +54,6 @@ export class ProductService {
 
     async updateProduct(id: number, data: UpdateProductDTO): Promise<ProductEntity> {
         const product = await this.findProductById(id);
-        return this.productRepository.save({...product, ...data})
+        return this.productRepository.save({ ...product, ...data })
     }
 }
