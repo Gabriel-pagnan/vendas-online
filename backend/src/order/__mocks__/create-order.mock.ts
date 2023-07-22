@@ -1,14 +1,15 @@
+import { paymentPixMock } from '../../payment/__mocks__/payment-pix.mock';
 import { addressMock } from '../../address/__mocks__/address.mock';
-import { paymentMock } from '../../payment/__mocks__/payment.mock';
-import { userEntityMock } from '../../user/__mocks__/user.mock';
-import { OrderEntity } from '../entities/order.entity';
+import { CreateOrderDTO } from '../dtos/create-order.dto';
+import { paymentCreditCardMock } from '../../payment/__mocks__/payment-cart.mock';
 
-export const orderMock: OrderEntity = {
+export const createOrderPixMock: CreateOrderDTO = {
     addressId: addressMock.id,
-    createdAt: new Date(),
-    date: new Date(),
-    id: 453543,
-    paymentId: paymentMock.id,
-    updatedAt: new Date(),
-    userId: userEntityMock.id,
+    codePix: paymentPixMock.code,
+    datePayment: '2020-01-01',
+};
+
+export const createOrderCreditCardMock: CreateOrderDTO = {
+    addressId: addressMock.id,
+    amountPayments: paymentCreditCardMock.amountPayments,
 };

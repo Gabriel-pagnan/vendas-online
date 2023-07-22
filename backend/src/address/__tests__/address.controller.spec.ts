@@ -15,7 +15,7 @@ describe('AddressController', () => {
                 {
                     provide: AddressService,
                     useValue: {
-                        createAddress: jest.fn().mockResolvedValue(addressMock),
+                        create: jest.fn().mockResolvedValue(addressMock),
                         findAddressByUserId: jest.fn().mockResolvedValue([addressMock]),
                     },
                 },
@@ -48,7 +48,7 @@ describe('AddressController', () => {
             {
                 id: addressMock.id,
                 complement: addressMock.complement,
-                numberAddress: addressMock.number,
+                number: addressMock.number,
                 cep: addressMock.cep,
             },
         ]);
