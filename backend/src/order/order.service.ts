@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { OrderEntity } from './entities/order.entity';
 import { CreateOrderDTO } from './dtos/create-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -45,17 +45,39 @@ export class OrderService {
         );
     }
 
-    async createOrder(data: CreateOrderDTO, userId: number): Promise<OrderEntity> {
+    async createOrder(createOrderDTO: CreateOrderDTO, userId: number): Promise<OrderEntity> {
         const cart = await this.cartService.findCartByUserId(userId, true);
         const products = await this.productService.findAll(
-            cart.cartProduct?.map((cartProduct) => cartProduct.id)
+            cart.cartProduct?.map((cartProduct) => cartProduct.productId),
         );
-        const payment: PaymentEntity = await this.paymentService.createPayment(data, products, cart);
-        const order = await this.saveOrder(data, userId, payment);
+        const payment: PaymentEntity = await this.paymentService.createPayment(
+            createOrderDTO,
+            products,
+            cart,
+        );
+        const order = await this.saveOrder(createOrderDTO, userId, payment);
 
         await this.createOrderProductUsingCart(cart, order.id, products);
         await this.cartService.clearCart(userId);
 
         return order;
+    }
+
+    async findOrdersByUserId(userId: number): Promise<OrderEntity[]> {
+        const orders = await this.orderRepository.find({
+            where: { userId },
+            relations: {
+                address: true,
+                ordersProduct: {
+                    product: true
+                },
+                payment: {
+                    paymentStatus: true
+                }
+            }
+        });
+
+        if (!orders || orders.length === 0) throw new NotFoundException('Orders not found');
+        return orders;
     }
 }
