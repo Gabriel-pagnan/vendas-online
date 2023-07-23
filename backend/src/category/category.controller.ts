@@ -13,9 +13,7 @@ export class CategoryController {
     
     @Get()
     async findAllCategories(): Promise<ReturnCategoryDTO[]> {
-        return(
-            await this.categoryService.findAllCategories()
-        ).map((category) => new ReturnCategoryDTO(category))
+        return await this.categoryService.findAllCategories()
     }
 
     @Roles(UserType.Admin)
