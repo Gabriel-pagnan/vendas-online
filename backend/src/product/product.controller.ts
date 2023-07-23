@@ -16,7 +16,7 @@ export class ProductController {
     @Get()
     async findAll(): Promise<ReturnProductDTO[]> {
         return (
-            await this.productService.findAll()).map((product) => new ReturnProductDTO(product)
+            await this.productService.findAll([], true)).map((product) => new ReturnProductDTO(product)
             )
     }
 
