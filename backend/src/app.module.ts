@@ -38,6 +38,7 @@ import { OrderModule } from './order/order.module';
 import { OrderProductModule } from './order-product/order-product.module';
 import { insertStatus1676323439062 } from './migration/1689859814580-insert-status';
 import { alterTablePayment1676323446877 } from './migration/1689859832379-alter-table-payment';
+import { CorreiosModule } from './correios/correios.module';
 
 @Module({
   imports: [
@@ -90,7 +91,8 @@ import { alterTablePayment1676323446877 } from './migration/1689859832379-alter-
     PaymentStatusModule,
     PaymentModule,
     OrderModule,
-    OrderProductModule
+    OrderProductModule,
+    CorreiosModule
   ],
   controllers: [],
   providers: [{
