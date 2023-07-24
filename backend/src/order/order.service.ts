@@ -67,7 +67,9 @@ export class OrderService {
         const orders = await this.orderRepository.find({
             where: { userId, id: orderId },
             relations: {
-                address: true,
+                address: {
+                    city: {state: true}
+                },
                 ordersProduct: {
                     product: true
                 },
