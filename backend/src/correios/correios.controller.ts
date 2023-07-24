@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { CorreiosService } from './correios.service';
-import { ReturnCepDTO } from './dtos/return-cep.dto';
+import { ReturnCepExternalDTO } from './dtos/return-cep-external.dto';
 
 @Controller('correios')
 export class CorreiosController {
@@ -9,7 +9,7 @@ export class CorreiosController {
     ) {}
 
     @Get(':cep')
-    async findAll(@Param('cep') cep: string): Promise<ReturnCepDTO> {
+    async findAll(@Param('cep') cep: string): Promise<ReturnCepExternalDTO> {
         return this.correiosService.findAddress(cep)
     }
 }
