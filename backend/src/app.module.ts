@@ -39,6 +39,7 @@ import { OrderProductModule } from './order-product/order-product.module';
 import { insertStatus1676323439062 } from './migration/1689859814580-insert-status';
 import { alterTablePayment1676323446877 } from './migration/1689859832379-alter-table-payment';
 import { CorreiosModule } from './correios/correios.module';
+import { alterTableProduct1678189577114 } from './migration/1690312174260-alter-table-product';
 
 @Module({
   imports: [
@@ -73,7 +74,8 @@ import { CorreiosModule } from './correios/correios.module';
         createTableOrder1676210150319,
         createTableOrderProduct1676210155094,
         insertStatus1676323439062,
-        alterTablePayment1676323446877
+        alterTablePayment1676323446877,
+        alterTableProduct1678189577114
       ],
       migrationsRun: true,
     }),

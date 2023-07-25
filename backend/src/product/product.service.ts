@@ -50,7 +50,14 @@ export class ProductService {
     async createProduct(data: CreateProductDTO): Promise<ProductEntity> {
         await this.categoryService.findCategoryById(data.categoryId);
 
-        return this.productRepository.save({ ...data })
+        return this.productRepository.save({ 
+            ...data,
+            weight: data.weight || 0,
+            width: data.width || 0,
+            length: data.length || 0,
+            diameter: data.diameter || 0,
+            height: data.height || 0
+        })
     }
 
     async findProductById(id: number): Promise<ProductEntity> {
