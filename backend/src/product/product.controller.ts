@@ -8,11 +8,11 @@ import { CreateProductDTO } from './dtos/create-product.dto';
 import { DeleteResult } from 'typeorm';
 import { UpdateProductDTO } from './dtos/update-product.dto';
 
-@Roles(UserType.Admin, UserType.User)
 @Controller('product')
 export class ProductController {
     constructor(private readonly productService: ProductService) { }
 
+    @Roles(UserType.Admin, UserType.User)
     @Get()
     async findAll(): Promise<ReturnProductDTO[]> {
         return (
@@ -38,5 +38,10 @@ export class ProductController {
     @Put('/:id')
     async updateProduct(@Param('id') id: number, @Body() data: UpdateProductDTO): Promise<ProductEntity> {
         return await this.productService.updateProduct(id, data);
+    }
+
+    @Get(':productId/delivery/:cep')
+    async findPriceDelivery(@Param('cep') cep: string, productId: number): Promise<any> {
+        return this.productService.findPriceDelivery(cep, productId)
     }
 }

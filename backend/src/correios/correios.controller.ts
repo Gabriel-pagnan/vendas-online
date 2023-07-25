@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { CorreiosService } from './correios.service';
 import { ReturnCepDTO } from './dtos/return-cep.dto';
+import { ResponsePriceCorreios } from './dtos/response-price.dto';
 
 @Controller('correios')
 export class CorreiosController {
