@@ -17,7 +17,7 @@ export class AddressController {
         return this.addressService.create(data, userId)
     }
 
-    @Roles(UserType.User, UserType.Admin)
+    @Roles(UserType.User, UserType.Root)
     @Get()
     async findAddressByUserId(@UserId() userId: number): Promise<ReturnAddressDTO[]>{
         return (await this.addressService.findAddressByUserId(userId)).map((address) => new ReturnAddressDTO(address))

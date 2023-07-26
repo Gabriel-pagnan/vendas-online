@@ -12,7 +12,7 @@ export class UserService {
     constructor(@InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>) {}
 
-    async create(data: CreateUserDTO): Promise<UserEntity> {
+    async create(data: CreateUserDTO, userType?: number): Promise<UserEntity> {
         const user = await this.findUserByEmail(data.email).catch(() => undefined);
         if(user){
             throw new BadGatewayException('E-mail já cadastrado');
@@ -21,7 +21,7 @@ export class UserService {
 
         return this.userRepository.save({
             ...data,
-            typeUser: UserType.User,
+            typeUser: userType ? userType : UserType.User,
             password: passwordHash
         }); 
     }

@@ -13,7 +13,7 @@ import { ReturnPriceDeliveryDTO } from './dtos/return-price-delivery.dto';
 export class ProductController {
     constructor(private readonly productService: ProductService) { }
 
-    @Roles(UserType.Admin, UserType.User)
+    @Roles(UserType.Root, UserType.User)
     @Get()
     async findAll(): Promise<ReturnProductDTO[]> {
         return (
@@ -21,20 +21,20 @@ export class ProductController {
             )
     }
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Root)
     @UsePipes(ValidationPipe)
     @Post()
     async createProduct(@Body() data: CreateProductDTO): Promise<ProductEntity> {
         return this.productService.createProduct(data);
     }
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Root)
     @Delete('/:id')
     async deleteProduct(@Param('id') id: number): Promise<DeleteResult> {
         return await this.productService.deleteProduct(id);
     }
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Root)
     @UsePipes(ValidationPipe)
     @Put('/:id')
     async updateProduct(@Param('id') id: number, @Body() data: UpdateProductDTO): Promise<ProductEntity> {

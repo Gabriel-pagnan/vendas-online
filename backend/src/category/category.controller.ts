@@ -6,7 +6,7 @@ import { UserType } from '../user/enums/enum.type';
 import { CreateCategoryDTO } from './dto/create-category.dto';
 import { CategoryEntity } from './entities/category.entity';
 
-@Roles(UserType.Admin, UserType.User)
+@Roles(UserType.Root, UserType.User)
 @Controller('category')
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
@@ -16,7 +16,7 @@ export class CategoryController {
         return await this.categoryService.findAllCategories()
     }
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Root)
     @UsePipes(ValidationPipe)
     @Post()
     async createCategory(@Body() data: CreateCategoryDTO): Promise<CategoryEntity> {
