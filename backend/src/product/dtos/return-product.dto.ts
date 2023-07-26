@@ -6,6 +6,11 @@ export class ReturnProductDTO {
     name: string;
     price: number;
     image: string;
+    weight: number;
+    length: number;
+    height: number;
+    width: number;
+    diameter: number;
     category?: ReturnCategoryDTO;
 
     constructor(product: ProductEntity) {
@@ -13,6 +18,11 @@ export class ReturnProductDTO {
         this.name = product.name;
         this.price = product.price;
         this.image = product.image;
-        this.category = product.category ? new ReturnCategoryDTO(product) : undefined
+        this.weight = product.weight;
+        this.length = product.length;
+        this.height = product.height;
+        this.width = product.width;
+        this.diameter = product.diameter;
+        this.category = product.category ? new ReturnCategoryDTO(product.category) : undefined
     }
 }

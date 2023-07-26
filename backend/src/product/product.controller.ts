@@ -21,6 +21,12 @@ export class ProductController {
             )
     }
 
+    @Roles(UserType.Root, UserType.Admin, UserType.User)
+    @Get(':id')
+    async findById(@Param('id') id: number): Promise<ReturnProductDTO> {
+        return new ReturnProductDTO(await this.productService.findProductById(id, true))        
+    }
+
     @Roles(UserType.Root)
     @UsePipes(ValidationPipe)
     @Post()
