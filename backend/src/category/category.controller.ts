@@ -18,6 +18,11 @@ export class CategoryController {
         return await this.categoryService.findAllCategories()
     }
 
+    @Get(':id')
+    async findById(@Param('id') id: number): Promise<ReturnCategoryDTO> {
+        return new ReturnCategoryDTO(await this.categoryService.findCategoryById(id, true))
+    }
+
     @Roles(UserType.Admin, UserType.Root)
     @UsePipes(ValidationPipe)
     @Post()
