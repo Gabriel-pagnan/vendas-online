@@ -6,6 +6,8 @@ import { CreateCategoryDTO } from './dto/create-category.dto';
 import { ProductService } from '../product/product.service';
 import { ReturnCategoryDTO } from './dto/return-category.dto';
 import { CountProductDTO } from '../product/dtos/count-product.dto';
+import { UpdateCategoryDTO } from './dto/update-category.dto';
+import { single } from 'rxjs';
 
 @Injectable()
 export class CategoryService {
@@ -23,7 +25,9 @@ export class CategoryService {
     }
 
     async findAllCategories(): Promise<ReturnCategoryDTO[]> {
-        const categories = await this.categoryRepository.find();
+        const categories = await this.categoryRepository.find({
+            order: {id: 'asc'}
+        });
         const count = await this.productService.countProductsByCategoryId();
 
         if(!categories || categories.length === 0) throw new NotFoundException('Category empty')
@@ -73,5 +77,14 @@ export class CategoryService {
         }
 
         return this.categoryRepository.delete({id: id})
+    }
+
+    async editCategory(id: number, data: UpdateCategoryDTO): Promise<CategoryEntity> {
+        const category = await this.findCategoryById(id);
+
+        return this.categoryRepository.save({
+            ...category,
+            ...data
+        })
     }
 }
