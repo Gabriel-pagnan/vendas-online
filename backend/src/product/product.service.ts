@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, Inject, forwardRef, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/producy.entity';
-import { DeleteResult, In, Repository } from 'typeorm';
+import { DeleteResult, ILike, In, Repository } from 'typeorm';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { CategoryService } from '../category/category.service';
 import { UpdateProductDTO } from './dtos/update-product.dto';
@@ -10,6 +10,8 @@ import { SizeProductDTO } from '../correios/dtos/size.product.dto';
 import { CorreiosService } from '../correios/correios.service';
 import { CdServiceEnum } from '../correios/enums/cd-service.enum';
 import { ReturnPriceDeliveryDTO } from './dtos/return-price-delivery.dto';
+import { sizePage } from './enums/size-page.enum';
+import { Pagination, PaginationMeta } from '../DTOs/paginations.dto';
 
 @Injectable()
 export class ProductService {
@@ -19,6 +21,37 @@ export class ProductService {
         private readonly categoryService: CategoryService,
         private readonly correioService: CorreiosService
     ) { }
+
+    async findAllPage(
+        search?: string, 
+        size?: sizePage.SIZE_DEFAULT_PAGE,
+        page?: sizePage.PAGE
+    ): Promise<Pagination<ProductEntity[]>> {
+        const skip = (page - 1) * size
+        let findOptions = {};
+
+        if (search) {
+            findOptions = {
+                where: {
+                    name: ILike(`%${search}%`),
+                }
+            };
+        }
+
+        const [products, total] = await this.productRepository.findAndCount({
+            ...findOptions,
+            take: size,
+            skip
+        });
+
+        if (!products || products.length === 0) {
+            throw new NotFoundException('Not found produtcs')
+        }
+        return new Pagination(
+            new PaginationMeta(Number(size),total, Number(page), Math.ceil(total / size)), 
+            products
+        )
+    }
 
     async findAll(productId?: number[], isFindRelations?: boolean): Promise<ProductEntity[]> {
         let findOptions = {};
@@ -30,7 +63,8 @@ export class ProductService {
                 },
             }
         }
-        if(isFindRelations) {
+
+        if (isFindRelations) {
             findOptions = {
                 ...findOptions,
                 relations: {
@@ -50,7 +84,7 @@ export class ProductService {
     async createProduct(data: CreateProductDTO): Promise<ProductEntity> {
         await this.categoryService.findCategoryById(data.categoryId);
 
-        return this.productRepository.save({ 
+        return this.productRepository.save({
             ...data,
             weight: data.weight || 0,
             width: data.width || 0,
@@ -86,9 +120,9 @@ export class ProductService {
 
     async countProductsByCategoryId(): Promise<CountProductDTO[]> {
         return this.productRepository.createQueryBuilder('product')
-        .select('product.category_id, COUNT(*) as total')
-        .groupBy('product.category_id')
-        .getRawMany();
+            .select('product.category_id, COUNT(*) as total')
+            .groupBy('product.category_id')
+            .getRawMany();
     }
 
     async findPriceDelivery(cep: string, productId: number): Promise<any> {
@@ -98,8 +132,8 @@ export class ProductService {
             this.correioService.findPriceDelivery(CdServiceEnum.PAC, cep, sizeProduct),
             this.correioService.findPriceDelivery(CdServiceEnum.SEDEX, cep, sizeProduct),
             this.correioService.findPriceDelivery(CdServiceEnum.SEDEX_10, cep, sizeProduct)
-        ]).catch(() => {throw new BadRequestException('Error find delivery')})
-        
+        ]).catch(() => { throw new BadRequestException('Error find delivery') })
+
 
         return new ReturnPriceDeliveryDTO(resultPrice)
     }

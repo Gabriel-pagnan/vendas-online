@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UsePipes, ValidationPipe, Body, Delete, Param, Put } from '@nestjs/common';
+import { Controller, Get, Post, UsePipes, ValidationPipe, Body, Delete, Param, Put, Query } from '@nestjs/common';
 import { Roles } from '../decorators/role.decorator';
 import { UserType } from '../user/enums/enum.type';
 import { ReturnProductDTO } from './dtos/return-product.dto';
@@ -8,6 +8,7 @@ import { CreateProductDTO } from './dtos/create-product.dto';
 import { DeleteResult } from 'typeorm';
 import { UpdateProductDTO } from './dtos/update-product.dto';
 import { ReturnPriceDeliveryDTO } from './dtos/return-price-delivery.dto';
+import { Pagination } from '../DTOs/paginations.dto';
 
 @Controller('product')
 export class ProductController {
@@ -19,6 +20,16 @@ export class ProductController {
         return (
             await this.productService.findAll([], true)).map((product) => new ReturnProductDTO(product)
             )
+    }
+
+    @Roles(UserType.Root, UserType.User)
+    @Get('/page')
+    async findAllPage(
+        @Query('search') search?: string, 
+        @Query('size') size?: number,
+        @Query('page') page?: number,
+    ): Promise<Pagination<ReturnProductDTO[]>> {
+        return this.productService.findAllPage(search, size, page)
     }
 
     @Roles(UserType.Root, UserType.Admin, UserType.User)
