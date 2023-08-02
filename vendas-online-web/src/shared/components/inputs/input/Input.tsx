@@ -1,5 +1,6 @@
 import { BoxInput, TitleInput } from './input.styles'
 import { Input as InputAntd, InputProps as InputPropsAntd } from 'antd';
+import '../../../../App.css'
 
 export interface InputProps extends InputPropsAntd {
     title?: string;
