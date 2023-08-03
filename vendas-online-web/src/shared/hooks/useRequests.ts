@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState } from "react"
+import { useGlobalContext } from "./useGlobalContext";
 
 export const useRequests = () => {
     const [loading, setLoading] = useState<boolean>(false);
-
+    const {setNotification} = useGlobalContext();
 
     const getRequest = async (url: string) => {
         setLoading(true)
@@ -15,7 +16,7 @@ export const useRequests = () => {
         setLoading(true)
         const data =  await axios.post(url, {email, password})
             .then((result) => {return result.data})
-            .catch(() => alert('Erro'))
+            .catch(() => setNotification('Senha invalida', 'error'))
         setLoading(false)
         return data
     }
