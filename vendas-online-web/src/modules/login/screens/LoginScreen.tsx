@@ -4,10 +4,8 @@ import { Input } from "../../../shared/components/inputs/input/Input";
 import { ContainerLoginScreen, LimitedContainer, ContainerLogin, TitleLogin } from "../styles/loginScreen.style";
 import { useRequests } from "../../../shared/hooks/useRequests";
 import { UserType } from "../types/UserType";
-import { useGlobalContext } from "../../../shared/hooks/useGlobalContext";
 
 export const LoginScreen = () => {
-    const { accessToken, setAccessToken } = useGlobalContext()
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const { loading, postRequest } = useRequests();
@@ -19,9 +17,8 @@ export const LoginScreen = () => {
         setPassword(e.target.value)
     }
 
-    const handleLogin = async () => {
-        const user = await postRequest<UserType>('http://localhost:3001/auth', { email, password });        
-        setAccessToken(user?.access_token || '');
+    const handleLogin = () => {
+        postRequest<UserType>('http://localhost:3001/auth', { email, password });        
     }    
 
     return (
