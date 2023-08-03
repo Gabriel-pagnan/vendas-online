@@ -13,13 +13,19 @@ export const useRequests = () => {
             .then((result) => {return result.data})
             .catch(() => alert('Erro'))
     }
-    const postRequest = async (url: string, body: unknown) => {
+    
+    const postRequest = async <T>(url: string, body: unknown): Promise<T | undefined> => {
         setLoading(true)
-        const data =  await connectionAPIPost(url, body)
+        const data =  await connectionAPIPost<T>(url, body)
             .then((result) => {return result})
-            .catch((error: Error) => setNotification(error.message, 'error'));
+            .catch((error: Error) => {
+                setNotification(error.message, 'error')
+                return undefined
+            });
 
         setLoading(false)
+        console.log(data);
+        
         return data
     }
 
