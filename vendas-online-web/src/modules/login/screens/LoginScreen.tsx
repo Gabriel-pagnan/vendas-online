@@ -17,7 +17,7 @@ export const LoginScreen = () => {
     }
 
     const handleLogin = async () => {
-        postRequest('http://localhost:3001/auth', email, password)
+        postRequest('http://localhost:3001/auth', {email, password})
     }
 
     return (
