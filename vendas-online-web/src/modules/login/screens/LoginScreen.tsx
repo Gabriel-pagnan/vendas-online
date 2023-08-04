@@ -3,12 +3,11 @@ import { Button } from "../../../shared/components/buttons/button/Button";
 import { Input } from "../../../shared/components/inputs/input/Input";
 import { ContainerLoginScreen, LimitedContainer, ContainerLogin, TitleLogin } from "../styles/loginScreen.style";
 import { useRequests } from "../../../shared/hooks/useRequests";
-import { UserType } from "../types/UserType";
 
 export const LoginScreen = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const { loading, postRequest } = useRequests();
+    const { loading, authRequest } = useRequests();
 
     const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
@@ -18,7 +17,7 @@ export const LoginScreen = () => {
     }
 
     const handleLogin = () => {
-        postRequest<UserType>('http://localhost:3001/auth', { email, password });        
+        authRequest({ email, password });        
     }    
 
     return (
