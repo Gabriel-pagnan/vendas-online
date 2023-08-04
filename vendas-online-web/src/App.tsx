@@ -5,24 +5,26 @@ import { loginRoutes } from './modules/login/houtes';
 import { useNotification } from './shared/hooks/useNotification';
 import { homeRoutes } from './modules/home/houtes';
 import { productRoutes } from './modules/product/houtes';
-
-const mainRoutes: RouteObject[] = [
-  {
-    path: "/",
-    element: <div>tela </div>,
-    errorElement: <div>error</div>
-},
-];
+import { verifyLoggedIn } from './shared/functions/connection/auth';
+import { useGlobalContext } from './shared/hooks/useGlobalContext';
 
 const router: RemixRouter = createBrowserRouter([
   ...homeRoutes,
-  ...loginRoutes, 
-  ...productRoutes
+  ...loginRoutes,
+  ...productRoutes,
 ]);
 
 function App() {
   const { contextHolder } = useNotification()
+  const { user, setUser } = useGlobalContext();
 
+  const routes: RouteObject[] = [...homeRoutes, ...loginRoutes];
+  const routesLoggedIn: RouteObject[] = [...productRoutes].map((route) => ({
+    ...route,
+    loader: () => verifyLoggedIn(setUser, user),
+  }));
+
+  const router: RemixRouter = createBrowserRouter([...routes, ...routesLoggedIn]);
   return (
     <>
       {contextHolder}
