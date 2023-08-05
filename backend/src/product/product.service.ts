@@ -67,6 +67,7 @@ export class ProductService {
         if (isFindRelations) {
             findOptions = {
                 ...findOptions,
+                order: {id: 'asc'},
                 relations: {
                     category: true
                 }

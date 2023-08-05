@@ -7,7 +7,6 @@ import { ProductService } from '../product/product.service';
 import { ReturnCategoryDTO } from './dto/return-category.dto';
 import { CountProductDTO } from '../product/dtos/count-product.dto';
 import { UpdateCategoryDTO } from './dto/update-category.dto';
-import { single } from 'rxjs';
 
 @Injectable()
 export class CategoryService {
