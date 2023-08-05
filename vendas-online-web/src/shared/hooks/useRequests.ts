@@ -13,7 +13,7 @@ export const useRequests = () => {
     const {setNotification, setUser} = useGlobalContext();
     const navigate = useNavigate();
 
-    const request = async <T>(url: string, method: MethodType, body?: unknown, saveGlobal?: (object: T) => void): 
+    const request = async <T>(url: string, method: MethodType, saveGlobal?: (object: T) => void, body?: unknown,): 
     Promise<T | undefined> => {
         setLoading(true);
         const data: T | undefined = await ConnectionAPI.connect<T>(url, method, body)
@@ -27,20 +27,6 @@ export const useRequests = () => {
             })
         setLoading(false);
 
-        return data
-    }
-    
-    const postRequest = async <T>(url: string, body: unknown): Promise<T | undefined> => {
-        setLoading(true)
-        const data =  await connectionAPIPost<T>(url, body)
-            .then((result) => {return result})
-            .catch((error: Error) => {
-                setNotification(error.message, 'error')
-                return undefined
-            });
-
-        setLoading(false)
-        
         return data
     }
 
@@ -61,7 +47,6 @@ export const useRequests = () => {
     return {
         loading,
         request,
-        postRequest,
         authRequest
     }
 }

@@ -8,11 +8,6 @@ import { productRoutes } from './modules/product/houtes';
 import { verifyLoggedIn } from './shared/functions/connection/auth';
 import { useGlobalContext } from './shared/hooks/useGlobalContext';
 
-const router: RemixRouter = createBrowserRouter([
-  ...homeRoutes,
-  ...loginRoutes,
-  ...productRoutes,
-]);
 
 function App() {
   const { contextHolder } = useNotification()
