@@ -14,14 +14,15 @@ import { Screen } from "../../../shared/components/screen/Screen";
 import { Button } from "../../../shared/components/buttons/button/Button";
 import { useNavigate } from "react-router-dom";
 import { PathEnum } from "../../../shared/enums/paths.enum";
-
+import { BoxButtons, LimiteSizeButton } from "../styles/product.style";
+import { PlusOutlined } from '@ant-design/icons'
 
 const columns: ColumnsType<ProductType> = [
     {
         title: 'Id',
         dataIndex: 'id',
         key: 'id',
-        render: (_, product) => <TooltipImage product={product}/>,
+        render: (_, product) => <TooltipImage product={product} />,
     },
     {
         title: 'Name',
@@ -33,7 +34,7 @@ const columns: ColumnsType<ProductType> = [
         title: 'Categoria',
         dataIndex: 'category',
         key: 'category',
-        render: (_, product) => <CategoryColumm category={product.category}/>,
+        render: (_, product) => <CategoryColumm category={product.category} />,
     },
     {
         title: 'Preço',
@@ -43,13 +44,22 @@ const columns: ColumnsType<ProductType> = [
     }
 ];
 
+const listBreadcrum = [
+    {
+        name: 'HOME',
+    },
+    {
+        name: 'PRODUTOS'
+    }
+]
+
 export const Product = () => {
     const { products, setProducts } = useDataContext();
     const { request } = useRequests();
     const navigate = useNavigate()
 
     useEffect(() => {
-        request<ProductType[]>(URL_PRODUCT, MethodsEnum.GET, setProducts)       
+        request<ProductType[]>(URL_PRODUCT, MethodsEnum.GET, setProducts)
     }, [])
 
     const handleClickInsert = () => {
@@ -57,16 +67,13 @@ export const Product = () => {
     }
 
     return (
-        <Screen listBreadcrumb={[
-            {
-                name: 'HOME',
-            },
-            {
-                name: 'PRODUTOS'
-            }
-        ]}>
-            <Button onClick={handleClickInsert}>Inserir</Button>
-            <Table columns={columns} dataSource={products}/>
+        <Screen listBreadcrumb={listBreadcrum}>
+            <BoxButtons>
+                <LimiteSizeButton>
+                    <Button type="primary" icon={<PlusOutlined />} onClick={handleClickInsert}>INSERIR</Button>
+                </LimiteSizeButton>
+            </BoxButtons>
+            <Table columns={columns} dataSource={products} />
         </Screen>
     )
 }
