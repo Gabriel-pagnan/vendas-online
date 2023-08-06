@@ -4,6 +4,6 @@ export interface ProductType {
     id: number,
     name: string,
     image: string,
-    price: string,
+    price: number,
     category?: CategoryType,
 }

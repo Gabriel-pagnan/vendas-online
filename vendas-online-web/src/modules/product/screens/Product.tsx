@@ -9,6 +9,11 @@ import type { ColumnsType } from 'antd/es/table';
 import Table from "../../../shared/components/tables/Table";
 import { CategoryColumm } from "../components/CategoryColumm";
 import { TooltipImage } from "../components/TooltipImage";
+import { convertNumberToMoney } from "../../../shared/functions/money";
+import { Screen } from "../../../shared/components/screen/Screen";
+import { Button } from "../../../shared/components/buttons/button/Button";
+import { useNavigate } from "react-router-dom";
+import { PathEnum } from "../../../shared/enums/paths.enum";
 
 
 const columns: ColumnsType<ProductType> = [
@@ -34,21 +39,34 @@ const columns: ColumnsType<ProductType> = [
         title: 'Preço',
         dataIndex: 'price',
         key: 'price',
-        render: (text) => <a>{text}</a>,
+        render: (_, product) => convertNumberToMoney(product.price),
     }
 ];
 
 export const Product = () => {
     const { products, setProducts } = useDataContext();
     const { request } = useRequests();
+    const navigate = useNavigate()
 
     useEffect(() => {
         request<ProductType[]>(URL_PRODUCT, MethodsEnum.GET, setProducts)       
     }, [])
 
+    const handleClickInsert = () => {
+        navigate(PathEnum.PRODUCT_INSERT)
+    }
+
     return (
-        <div>
+        <Screen listBreadcrumb={[
+            {
+                name: 'HOME',
+            },
+            {
+                name: 'PRODUTOS'
+            }
+        ]}>
+            <Button onClick={handleClickInsert}>Inserir</Button>
             <Table columns={columns} dataSource={products}/>
-        </div>
+        </Screen>
     )
 }
