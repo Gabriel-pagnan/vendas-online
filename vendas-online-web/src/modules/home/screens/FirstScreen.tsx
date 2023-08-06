@@ -10,7 +10,7 @@ export const FirstScreen = () => {
 
     useEffect(() => {
         if(user) navigate(PathEnum.PRODUCT)
-    }, [])
+    }, [user])
 
     return (
         <Spin tip="Loading" size="large">

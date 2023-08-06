@@ -6,20 +6,29 @@ import { useNotification } from './shared/hooks/useNotification';
 import { homeRoutes } from './modules/home/houtes';
 import { productRoutes } from './modules/product/houtes';
 import { verifyLoggedIn } from './shared/functions/connection/auth';
+import { useRequests } from './shared/hooks/useRequests';
+import { useEffect } from 'react';
+import { URL_USER } from './shared/constants/urls';
+import { MethodsEnum } from './shared/enums/methods.enum';
 import { useGlobalContext } from './shared/hooks/useGlobalContext';
 
+const routes: RouteObject[] = [...loginRoutes ];
+const routesLoggedIn: RouteObject[] = [...productRoutes, ...homeRoutes,].map((route) => ({
+  ...route,
+  loader: verifyLoggedIn,
+}));
+
+const router: RemixRouter = createBrowserRouter([...routes, ...routesLoggedIn]);
 
 function App() {
-  const { contextHolder } = useNotification()
-  const { user, setUser } = useGlobalContext();
+  const { contextHolder } = useNotification();
+  const {setUser} = useGlobalContext();
+  const {request} = useRequests();
 
-  const routes: RouteObject[] = [...loginRoutes, ...homeRoutes, ];
-  const routesLoggedIn: RouteObject[] = [...productRoutes].map((route) => ({
-    ...route,
-    loader: () => verifyLoggedIn(setUser, user),
-  }));
+  useEffect(() => {
+    request(URL_USER, MethodsEnum.GET, setUser);
+  }, [])
 
-  const router: RemixRouter = createBrowserRouter([...routes, ...routesLoggedIn]);
   return (
     <>
       {contextHolder}
