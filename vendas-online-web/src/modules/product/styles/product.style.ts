@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const BoxButtons = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin: 16px 0px;
+  margin: 20px 0px;
 `;
 
 export const LimiteSizeButton = styled.div`
@@ -11,5 +12,5 @@ export const LimiteSizeButton = styled.div`
 `;
 
 export const LimiteSizeInput = styled.div`
-  width: 240px;
+  width: 400px;
 `;
