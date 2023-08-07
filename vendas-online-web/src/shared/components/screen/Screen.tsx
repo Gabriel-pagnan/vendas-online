@@ -1,5 +1,6 @@
 import { Breadcrumb, IListBreadcrumb } from "../breadcrumb/Breadcrumb"
-import { ScreenContainer } from "./screen.style"
+import { ScreenContainer } from "./screen.style";
+import { Divider } from "antd";
 
 interface IScreenProps {
     children: React.ReactNode,
@@ -9,7 +10,12 @@ interface IScreenProps {
 export const Screen = ({ children, listBreadcrumb }: IScreenProps) => {
     return (
         <ScreenContainer>
-            {listBreadcrumb && <Breadcrumb listBreadcrumb={listBreadcrumb}/>}
+            {listBreadcrumb && (
+                <>
+                    <Breadcrumb listBreadcrumb={listBreadcrumb}/>
+                    <Divider />
+                </>
+            )}
             {children}
         </ScreenContainer>
     )

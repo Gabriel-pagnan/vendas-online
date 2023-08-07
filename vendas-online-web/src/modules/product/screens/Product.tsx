@@ -78,13 +78,9 @@ export const Product = () => {
     }
 
     const onSearch = (value: string) => {
-        if(!value) {
-            setFilterProduct([...products])
-        }else{
-            setFilterProduct([
-                ...filterProduct.filter((product) => product.name.includes(value))
-            ])
-        }
+        setFilterProduct([
+            ...filterProduct.filter((product) => product.name.includes(value))
+        ])
     }
 
     return (
