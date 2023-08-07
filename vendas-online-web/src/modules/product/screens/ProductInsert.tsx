@@ -5,13 +5,18 @@ import { useDataContext } from "../../../shared/hooks/useDataContext"
 import { useRequests } from "../../../shared/hooks/useRequests"
 import { MethodsEnum } from "../../../shared/enums/methods.enum"
 import { URL_CATEGORY, URL_PRODUCT } from "../../../shared/constants/urls"
-import { LimitedContainer } from "../styles/productInsert.style"
+import { ProductInsertContainer } from "../styles/productInsert.style"
 import { Input } from "../../../shared/components/inputs/input/Input"
 import { Button } from "../../../shared/components/buttons/button/Button"
-import { CheckOutlined } from "@ant-design/icons"
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons"
 import { Select } from "../../../shared/components/inputs/select/Select"
 import { InsertProductDTO } from "../../../shared/dtos/insert-product.dto"
 import { connectionAPIPost } from "../../../shared/functions/connection/connetionAPI"
+import { LimitedContainer } from "../../../shared/components/styles/limited.styled"
+import { DisplayFlexJustifyRight } from "../../../shared/components/styles/display.styled"
+import { useNavigate } from "react-router-dom"
+import { useGlobalContext } from "../../../shared/hooks/useGlobalContext"
+import { InputMoney } from "../../../shared/components/inputs/inputMoney/InputMoney"
 
 const listBreadcrumb = [
     {
@@ -27,8 +32,10 @@ const listBreadcrumb = [
 ]
 
 export const ProductInsert = () => {
-    const [product, setProduct] = useState<InsertProductDTO>({name: '', price: 0, image: '', })
+    const [product, setProduct] = useState<InsertProductDTO>({ name: '', price: 0, image: '', })
     const { categories, setCategories } = useDataContext();
+    const { setNotification } = useGlobalContext();
+    const navigate = useNavigate();
     const { request } = useRequests();
 
     useEffect(() => {
@@ -37,41 +44,61 @@ export const ProductInsert = () => {
         }
     }, [])
 
-    const handleSave = () => {
-        connectionAPIPost(URL_PRODUCT, product)
+    const handleSave = async () => {
+        await connectionAPIPost(URL_PRODUCT, product)
+            .then(() => {
+                setNotification('Produto cadastrado.', 'success')
+                navigate(PathEnum.PRODUCT)
+            })
+            .catch((error: Error) => { setNotification(error.message, 'error') })
+    }
+    const handleCancel = () => {
+        navigate(PathEnum.PRODUCT)
     }
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>, nameObject: string) => {
-        setProduct({...product, [nameObject]: e.target.value})
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>, nameObject: string, isNumber?: boolean) => {
+        setProduct({
+            ...product,
+            [nameObject]: isNumber ? Number(e.target.value) : e.target.value
+        })
     }
 
     const handleChange = (value: string) => {
-        setProduct({...product, categoryId: Number(value)})
-    };
-    const handleChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setProduct({...product, price: Number(e.target.value)})
+        setProduct({ ...product, categoryId: Number(value) })
     };
 
     return (
         <Screen listBreadcrumb={listBreadcrumb}>
-            <LimitedContainer>
-                <Input onChange={(e) => onChange(e, 'name')} value={product.name} title="Nome" />
-                <Input onChange={(e) => onChange(e, 'image')} value={product.image} title="URL Imagem" />
-                <Input onChange={handleChangePrice} value={product.price} title="Preço" />
+            <ProductInsertContainer>
+                <LimitedContainer width={400}>
 
-                <Select
-                    title="Categorias"
-                    onChange={handleChange}
-                    options={
-                        categories.map((category) => ({
-                            value: `${category.id}`,
-                            label: `${category.name}`
-                        }))
-                    }
-                />
-                <Button onClick={handleSave} margin="20px 0" color="green" type="primary" icon={<CheckOutlined />}>Salvar</Button>
+                    <Input onChange={(e) => onChange(e, 'name')} value={product.name} title="Nome" />
+                    <Input onChange={(e) => onChange(e, 'image')} value={product.image} title="URL Imagem" />
+                    <InputMoney onChange={(e) => onChange(e, 'price', true)} value={product.price}  title="Preço"/>
 
-            </LimitedContainer>
+                    <Select
+                        title="Categorias"
+                        onChange={handleChange}
+                        options={
+                            categories.map((category) => ({
+                                value: `${category.id}`,
+                                label: `${category.name}`
+                            }))
+                        }
+                    />
+
+                    <DisplayFlexJustifyRight>
+                        <LimitedContainer width={120} margin="0 20px 20px">
+                            <Button onClick={handleCancel} margin="20px 0" danger icon={<CloseOutlined />}>Cancelar</Button>
+                        </LimitedContainer>
+
+                        <LimitedContainer width={120}>
+                            <Button onClick={handleSave} margin="20px 0" color="green" type="primary" icon={<CheckOutlined />}>Salvar</Button>
+                        </LimitedContainer>
+                    </DisplayFlexJustifyRight>
+
+                </LimitedContainer>
+            </ProductInsertContainer>
         </Screen>
     )
 }

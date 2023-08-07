@@ -3,5 +3,8 @@ export enum PathEnum {
     PRODUCT_INSERT = '/product/insert',
     LOGIN = '/login',
     FIRST_SCREEN = '/home',
-    USER = 'PATCH',
+    CATEGORY = '/category',
+    CATEGORY_INSERT = `/category/`,
+    ORDER = '/order',
+    USER = '/user'
 }

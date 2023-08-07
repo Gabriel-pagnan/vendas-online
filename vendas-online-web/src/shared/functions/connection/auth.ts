@@ -17,13 +17,13 @@ export const getAuthorizationToken = () => getItemStorage(AUTHORIZATION_KEY);
 export const verifyLoggedIn = async () => {
     const token = getAuthorizationToken();
     if (!token) {
-        location.href = '/login';
+        return redirect(PathEnum.LOGIN);
     }
-
+    
     await connectionAPIGet<UserType>(URL_USER)
-        .catch(() => {
-            unsetAuthorizationToken();
-            location.href = '/login';
+    .catch(() => {
+        unsetAuthorizationToken();
+            return redirect(PathEnum.LOGIN);
         });
 
     return null;
