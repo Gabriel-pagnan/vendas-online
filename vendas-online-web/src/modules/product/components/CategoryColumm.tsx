@@ -6,17 +6,17 @@ interface ICategoryColummProps {
 }
 
 const colors: string[] = [
-    '#008000',
-    '#FF0000',
-    '#ffa500',
+    '#3b953b',
+    '#d33131',
+    '#d7a240',
     '#FFD700',
-    '#4E2728 ',
-    '#00FFFF',
-    '#FF00FF',
-    '#108ee9',
-    '#2db7f5',
-    ' #800080',
-    '#87d068',
+    '#8f4c4d ',
+    '#3fcece',
+    '#d439d4',
+    '#2e91d7',
+    '#35a2d5',
+    ' #992799',
+    '#9add7e',
 ];
 
 export const CategoryColumm = ({ category }: ICategoryColummProps) => {
