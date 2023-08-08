@@ -19,12 +19,14 @@ export const verifyLoggedIn = async () => {
     if (!token) {
         return redirect(PathEnum.LOGIN);
     }
-    
-    await connectionAPIGet<UserType>(URL_USER)
-    .catch(() => {
-        unsetAuthorizationToken();
+
+    const user = await connectionAPIGet<UserType>(URL_USER)
+        .catch(() => {
+            unsetAuthorizationToken();
             return redirect(PathEnum.LOGIN);
         });
+
+    if (!user) return redirect(PathEnum.LOGIN);
 
     return null;
 };

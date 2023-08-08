@@ -3,11 +3,13 @@ import { Button } from "../../../shared/components/buttons/button/Button";
 import { Input } from "../../../shared/components/inputs/input/Input";
 import { ContainerLoginScreen, LimitedContainer, ContainerLogin, TitleLogin } from "../styles/loginScreen.style";
 import { useRequests } from "../../../shared/hooks/useRequests";
+import { useNavigate } from "react-router-dom";
 
 export const LoginScreen = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const { loading, authRequest } = useRequests();
+    const navigate = useNavigate();
 
     const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
@@ -17,7 +19,7 @@ export const LoginScreen = () => {
     }
 
     const handleLogin = () => {
-        authRequest({ email, password });        
+        authRequest(navigate, { email, password });        
     }    
 
     return (
