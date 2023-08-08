@@ -1,18 +1,14 @@
-import {
-    HomeOutlined,
-    LaptopOutlined,
-    ProfileOutlined,
-    SafetyCertificateOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+import { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Menu as MenuAntd } from 'antd';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {BiSolidCategory} from 'react-icons/bi';
+import {CgLogOff} from 'react-icons/cg';
+import {FaUserTie, FaHome, FaBoxOpen, FaShoppingCart} from 'react-icons/fa';
 
-
-import { ContainerLogoName, ContainerMenu, NameCompany } from './menu.style';
 import { PathEnum } from '../../enums/paths.enum';
+import { logout } from '../../functions/connection/auth';
+import { ContainerLogoName, ContainerMenu, NameCompany } from './menu.style';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -24,12 +20,12 @@ export const Menu = () => {
         {
             key: 'home',
             label: 'Principal',
-            icon: <HomeOutlined />,
+            icon: <FaHome />,
         },
         {
             key: 'products',
             label: 'Produtos',
-            icon: <LaptopOutlined />,
+            icon: <FaBoxOpen />,
             children: [
                 {
                     key: 'products_view',
@@ -46,7 +42,7 @@ export const Menu = () => {
         {
             key: 'category',
             label: 'Categorias',
-            icon: <ProfileOutlined />,
+            icon: <BiSolidCategory />,
             children: [
                 {
                     key: 'category_view',
@@ -63,14 +59,21 @@ export const Menu = () => {
         {
             key: 'order',
             label: 'Pedidos',
-            icon: <SafetyCertificateOutlined />,
+            icon: <FaShoppingCart />,
             onClick: () => navigate(PathEnum.ORDER),
         },
         {
             key: 'user',
             label: 'Clientes',
-            icon: <UserOutlined />,
+            icon: <FaUserTie />,
             onClick: () => navigate(PathEnum.USER),
+        },
+        {
+            key: 'logout',
+            label: 'Sair',
+            icon: <CgLogOff size={20}/>,
+            style: {background: '#764582', position: 'absolute', bottom: 0, marginBottom: '15px'},
+            onClick: () => logout,
         },
     ];
 
@@ -87,7 +90,7 @@ export const Menu = () => {
             <MenuAntd
                 theme="dark"
                 onClick={onClick}
-                style={{ width: 240 }}
+                style={{ width: 240, background: '#313333', color: 'white' }}
                 defaultOpenKeys={['sub1']}
                 selectedKeys={[current]}
                 mode="inline"
