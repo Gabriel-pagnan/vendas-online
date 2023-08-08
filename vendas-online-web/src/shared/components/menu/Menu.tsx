@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type { MenuProps } from 'antd';
-import { Menu as MenuAntd } from 'antd';
+import { Menu as MenuAntd, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import {BiSolidCategory} from 'react-icons/bi';
-import {CgLogOff} from 'react-icons/cg';
-import {FaUserTie, FaHome, FaBoxOpen, FaShoppingCart} from 'react-icons/fa';
+import { BiSolidCategory } from 'react-icons/bi';
+import { CgLogOff } from 'react-icons/cg';
+import { FaUserTie, FaHome, FaBoxOpen, FaShoppingCart } from 'react-icons/fa';
 
 import { PathEnum } from '../../enums/paths.enum';
 import { logout } from '../../functions/connection/auth';
@@ -15,6 +15,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 export const Menu = () => {
     const navigate = useNavigate();
     const [current, setCurrent] = useState('1');
+    const [open, setOpen] = useState(false);
 
     const items: MenuItem[] = [
         {
@@ -71,14 +72,22 @@ export const Menu = () => {
         {
             key: 'logout',
             label: 'Sair',
-            icon: <CgLogOff size={20}/>,
-            style: {background: '#764582', position: 'absolute', bottom: 0, marginBottom: '15px'},
-            onClick: () => logout,
+            icon: <CgLogOff size={20} />,
+            style: { background: '#764582', position: 'absolute', bottom: 0, marginBottom: '15px' },
+            onClick: () => showModal(),
         },
     ];
 
     const onClick: MenuProps['onClick'] = (e) => {
         setCurrent(e.key);
+    };
+
+    const showModal = () => {
+        setOpen(true);
+    };
+
+    const hideModal = () => {
+        setOpen(false);
     };
 
     return (
@@ -96,6 +105,15 @@ export const Menu = () => {
                 mode="inline"
                 items={items}
             />
+            <Modal
+                title="Atenção"
+                open={open}
+                onOk={() => logout(navigate)}
+                onCancel={hideModal}
+                okText="Sim"
+                cancelText="Cancelar">
+                <p>Tem certeza que deseja sair?</p>
+            </Modal>
         </ContainerMenu>
     );
 };

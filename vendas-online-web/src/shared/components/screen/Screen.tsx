@@ -1,4 +1,5 @@
 import { Breadcrumb, IListBreadcrumb } from "../breadcrumb/Breadcrumb"
+import { Header } from "../header/Header";
 import { Menu } from "../menu/Menu";
 import { ScreenContainer } from "./screen.style";
 import { Divider } from "antd";
@@ -10,15 +11,18 @@ interface IScreenProps {
 
 export const Screen = ({ children, listBreadcrumb }: IScreenProps) => {
     return (
-        <ScreenContainer>
-            <Menu />
-            {listBreadcrumb && (
-                <>
-                    <Breadcrumb listBreadcrumb={listBreadcrumb}/>
-                    <Divider />
-                </>
-            )}
-            {children}
-        </ScreenContainer>
+        <>
+            <Header />
+            <ScreenContainer>
+                <Menu />
+                {listBreadcrumb && (
+                    <>
+                        <Breadcrumb listBreadcrumb={listBreadcrumb} />
+                        <Divider />
+                    </>
+                )}
+                {children}
+            </ScreenContainer>
+        </>
     )
 }
