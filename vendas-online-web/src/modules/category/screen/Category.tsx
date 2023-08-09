@@ -41,7 +41,7 @@ const listBreadcrum = [
         name: 'HOME',
     },
     {
-        name: 'CATEGORY'
+        name: 'CATEGORIAS'
     }
 ]
 
@@ -51,7 +51,7 @@ export const Category = () => {
     const navigate = useNavigate()
 
     const handleClickInsert = () => {
-        navigate(PathEnum.PRODUCT_INSERT)
+        navigate(PathEnum.CATEGORY_INSERT)
     }
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export const Category = () => {
     }, [categories])
     const onSearch = (value: string) => {
         setFilterCategory([
-            ...categories.filter((category) => category.name.includes(value))
+            ...categories.filter((category) => category.name.toUpperCase().includes(value.toUpperCase()))
         ])
     }
 

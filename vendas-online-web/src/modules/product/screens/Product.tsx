@@ -80,7 +80,7 @@ export const Product = () => {
 
     const onSearch = (value: string) => {
         setFilterProduct([
-            ...filterProduct.filter((product) => product.name.includes(value))
+            ...filterProduct.filter((product) => product.name.toUpperCase().includes(value.toUpperCase()))
         ])
     }
 

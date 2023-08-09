@@ -3,7 +3,7 @@ import { useGlobalContext } from "./useGlobalContext";
 import ConnectionAPI, { MethodType, connectionAPIPost } from "../functions/connection/connetionAPI";
 import { URL_AUTH } from "../constants/urls";
 import { ERROR_INVALID_PASSWORD } from "../constants/errorsStatus";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 import { setAuthorizationToken } from "../functions/connection/auth";
 import { PathEnum } from "../enums/paths.enum";
 import { AuthType } from "../../modules/login/types/AuthType";

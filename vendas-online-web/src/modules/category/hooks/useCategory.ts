@@ -15,6 +15,7 @@ export const useCategory = () => {
     }, [])
 
     return {
-        categories
+        categories,
+        setCategories
     }
 }

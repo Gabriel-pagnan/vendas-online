@@ -4,7 +4,8 @@ export enum PathEnum {
     LOGIN = '/login',
     FIRST_SCREEN = '/home',
     CATEGORY = '/category',
-    CATEGORY_INSERT = `/category/`,
+    CATEGORY_INSERT = '/category/insert',
+    CATEGORY_EDIT = '/category/:categoryId',
     ORDER = '/order',
     USER = '/user'
 }
