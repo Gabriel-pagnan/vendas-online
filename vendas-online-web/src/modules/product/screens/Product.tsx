@@ -14,9 +14,10 @@ import { Screen } from "../../../shared/components/screen/Screen";
 import { Button } from "../../../shared/components/buttons/button/Button";
 import { useNavigate } from "react-router-dom";
 import { PathEnum } from "../../../shared/enums/paths.enum";
-import { BoxButtons, LimiteSizeButton, LimiteSizeInput } from "../styles/product.style";
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { Input } from "antd";
+import { LimitedContainer } from "../../../shared/components/styles/limited.styled";
+import { DisplayFlexJustifyBetween } from "../../../shared/components/styles/display.styled";
 
 const { Search } = Input;
 
@@ -85,15 +86,15 @@ export const Product = () => {
 
     return (
         <Screen listBreadcrumb={listBreadcrum}>
-            <BoxButtons>
-                <LimiteSizeInput>
+            <DisplayFlexJustifyBetween margin="10px 16px">
+                <LimitedContainer width={350}>
                     <Search placeholder="Buscar produto" onSearch={onSearch} enterButton prefix={<SearchOutlined />}/>
-                </LimiteSizeInput>
+                </LimitedContainer>
 
-                <LimiteSizeButton>
+                <LimitedContainer width={120}>
                     <Button type="primary" icon={<PlusOutlined />} onClick={handleClickInsert}>INSERIR</Button>
-                </LimiteSizeButton>
-            </BoxButtons>
+                </LimitedContainer>
+            </DisplayFlexJustifyBetween>
             <Table columns={columns} dataSource={filterProduct} />
         </Screen>
     )

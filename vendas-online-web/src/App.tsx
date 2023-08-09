@@ -11,11 +11,13 @@ import { URL_USER } from './shared/constants/urls';
 import { MethodsEnum } from './shared/enums/methods.enum';
 import { useGlobalContext } from './shared/hooks/useGlobalContext';
 import { firstRoutes } from './modules/home/houtes';
+import { categoryRoutes } from './modules/category/houtes';
 
 const routes: RouteObject[] = [...loginRoutes];
 const routesLoggedIn: RouteObject[] = [
   ...productRoutes,
   ...firstRoutes,
+  ...categoryRoutes
 ].map((route) => ({
   ...route,
   loader: verifyLoggedIn,
