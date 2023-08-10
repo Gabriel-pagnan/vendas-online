@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react"
 import { PathEnum } from "../../../shared/enums/paths.enum";
 import { URL_CATEGORY } from "../../../shared/constants/urls";
-import { useGlobalContext } from "../../../shared/hooks/useGlobalContext";
 import { useNavigate } from "react-router-dom";
 import { useRequests } from "../../../shared/hooks/useRequests";
 import { MethodsEnum } from "../../../shared/enums/methods.enum";
-import { useCategory } from "./useCategory";
+import { useCategoryReducer } from "../../../store/reducers/categoryReducer/useCategoryReducer";
+import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGlobalReducer";
 
 export const useInsertCategory = () => {
     const navigate = useNavigate();
     const {request} = useRequests();
-    const {setCategories} = useCategory();
+    const {setCategories} = useCategoryReducer();
     const [name, setName] = useState<string>('');
-    const { setNotification } = useGlobalContext();
+    const { setNotification } = useGlobalReducer();
     const [loading, setLoading] = useState<boolean>(false);
     const [disabledButton, setDisabledButton] = useState<boolean>(true);
 

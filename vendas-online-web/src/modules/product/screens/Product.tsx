@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDataContext } from "../../../shared/hooks/useDataContext";
 import { useRequests } from "../../../shared/hooks/useRequests";
 import { URL_PRODUCT } from "../../../shared/constants/urls";
 import { MethodsEnum } from "../../../shared/enums/methods.enum";
@@ -18,6 +17,7 @@ import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { Input } from "antd";
 import { LimitedContainer } from "../../../shared/components/styles/limited.styled";
 import { DisplayFlexJustifyBetween } from "../../../shared/components/styles/display.styled";
+import { useProductReducer } from "../../../store/reducers/productReducer/useProductReducer";
 
 const { Search } = Input;
 
@@ -61,7 +61,7 @@ const listBreadcrum = [
 ]
 
 export const Product = () => {
-    const { products, setProducts } = useDataContext();
+    const {products, setProducts} = useProductReducer();
     const [filterProduct, setFilterProduct] = useState<ProductType[]>([])
     const { request } = useRequests();
     const navigate = useNavigate()

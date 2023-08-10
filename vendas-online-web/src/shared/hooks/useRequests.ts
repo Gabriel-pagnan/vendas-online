@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useGlobalContext } from "./useGlobalContext";
 import ConnectionAPI, { MethodType, connectionAPIPost } from "../functions/connection/connetionAPI";
 import { URL_AUTH } from "../constants/urls";
 import { ERROR_INVALID_PASSWORD } from "../constants/errorsStatus";
@@ -7,10 +6,11 @@ import { NavigateFunction } from "react-router-dom";
 import { setAuthorizationToken } from "../functions/connection/auth";
 import { PathEnum } from "../enums/paths.enum";
 import { AuthType } from "../../modules/login/types/AuthType";
+import { useGlobalReducer } from "../../store/reducers/globalReducer/useGlobalReducer";
 
 export const useRequests = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const {setNotification, setUser} = useGlobalContext();
+    const {setNotification, setUser} = useGlobalReducer();
 
     const request = async <T>(url: string, method: MethodType, saveGlobal?: (object: T) => void, body?: unknown,): 
     Promise<T | undefined> => {

@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { connectionAPIPost } from "../../../shared/functions/connection/connetionAPI"
 import { URL_PRODUCT } from "../../../shared/constants/urls";
-import { useGlobalContext } from "../../../shared/hooks/useGlobalContext";
 import { InsertProductDTO } from "../../../shared/dtos/insert-product.dto";
 import { PathEnum } from "../../../shared/enums/paths.enum";
 import { useNavigate } from "react-router-dom";
+import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGlobalReducer";
 
 
 export const useInsertProduct = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [disabledButton, setDisabledButton] = useState<boolean>(true);
     const [product, setProduct] = useState<InsertProductDTO>({ name: '', price: 0, image: '', })
-    const { setNotification } = useGlobalContext();
+    const { setNotification } = useGlobalReducer();
     const navigate = useNavigate();
 
     useEffect(() => {

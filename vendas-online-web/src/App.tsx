@@ -9,9 +9,9 @@ import { useRequests } from './shared/hooks/useRequests';
 import { useEffect } from 'react';
 import { URL_USER } from './shared/constants/urls';
 import { MethodsEnum } from './shared/enums/methods.enum';
-import { useGlobalContext } from './shared/hooks/useGlobalContext';
 import { firstRoutes } from './modules/home/houtes';
 import { categoryRoutes } from './modules/category/houtes';
+import { useGlobalReducer } from './store/reducers/globalReducer/useGlobalReducer';
 
 const routes: RouteObject[] = [...loginRoutes];
 const routesLoggedIn: RouteObject[] = [
@@ -27,7 +27,7 @@ const router: RemixRouter = createBrowserRouter([...routes, ...routesLoggedIn]);
 
 function App() {
   const { contextHolder } = useNotification();
-  const {setUser} = useGlobalContext();
+  const {setUser} = useGlobalReducer();
   const {request} = useRequests();
 
   useEffect(() => {
