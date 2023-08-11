@@ -12,12 +12,14 @@ import { MethodsEnum } from './shared/enums/methods.enum';
 import { firstRoutes } from './modules/home/houtes';
 import { categoryRoutes } from './modules/category/houtes';
 import { useGlobalReducer } from './store/reducers/globalReducer/useGlobalReducer';
+import { orderRoutes } from './modules/order/houtes';
 
 const routes: RouteObject[] = [...loginRoutes];
 const routesLoggedIn: RouteObject[] = [
   ...productRoutes,
   ...firstRoutes,
-  ...categoryRoutes
+  ...categoryRoutes,
+  ...orderRoutes
 ].map((route) => ({
   ...route,
   loader: verifyLoggedIn,
