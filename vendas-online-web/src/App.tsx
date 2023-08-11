@@ -19,7 +19,7 @@ const routesLoggedIn: RouteObject[] = [
   ...productRoutes,
   ...firstRoutes,
   ...categoryRoutes,
-  ...orderRoutes
+  ...orderRoutes,
 ].map((route) => ({
   ...route,
   loader: verifyLoggedIn,

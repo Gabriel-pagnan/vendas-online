@@ -3,6 +3,8 @@ import { Screen } from "../../../shared/components/screen/Screen"
 import { useOrder } from "../hooks/useOrder"
 import { OrderType } from "../../../shared/types/OrderType";
 import Table from "../../../shared/components/tables/Table";
+import { useNavigate } from "react-router-dom";
+import { PathEnum } from "../../../shared/enums/paths.enum";
 
 const columns: ColumnsType<OrderType> = [
     {
@@ -15,7 +17,7 @@ const columns: ColumnsType<OrderType> = [
         title: 'Data',
         dataIndex: 'date',
         key: 'date',
-        render: (text) => text,
+        render: (text) => <a>{text}</a>,
         // sorter: (a, b) => a.date - b.date,
     },
     {
@@ -44,11 +46,17 @@ const listBreadcrum = [
 ]
 
 export const Order = () => {
-    const { orders } = useOrder()
-    
+    const { orders } = useOrder();
+    const navigate = useNavigate()
+
     return (
         <Screen listBreadcrumb={listBreadcrum}>
-            <Table columns={columns} dataSource={orders} />
+            <Table
+                onRow={(record) => ({
+                    onClick: () => navigate(`${PathEnum.ORDER}/${record.id}`),
+                })}
+                columns={columns}
+                dataSource={orders} />
         </Screen>
     )
 }
