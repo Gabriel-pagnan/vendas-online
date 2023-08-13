@@ -56,7 +56,8 @@ export const Category = () => {
 
     useEffect(() => {
         setFilterCategory([...categories])
-    }, [categories])
+    }, [categories]);
+    
     const onSearch = (value: string) => {
         setFilterCategory([
             ...categories.filter((category) => category.name.toUpperCase().includes(value.toUpperCase()))

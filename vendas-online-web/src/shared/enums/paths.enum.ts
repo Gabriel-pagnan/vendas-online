@@ -8,5 +8,6 @@ export enum PathEnum {
     CATEGORY_EDIT = '/category/:categoryId',
     ORDER = '/order',
     ORDER_ID = '/order/:orderId',
-    USER = '/user'
+    USER = '/user',
+    USER_INSERT = '/user/insert',
 }

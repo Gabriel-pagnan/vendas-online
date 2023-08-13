@@ -67,7 +67,18 @@ export const Menu = () => {
             key: 'user',
             label: 'Clientes',
             icon: <FaUserTie />,
-            onClick: () => navigate(PathEnum.USER),
+            children: [
+                {
+                    key: 'user_view',
+                    label: 'Visualizar',
+                    onClick: () => navigate(PathEnum.USER),
+                },
+                {
+                    key: 'user_insert',
+                    label: 'Inserir',
+                    onClick: () => navigate(PathEnum.USER_INSERT),
+                },
+            ],
         },
         {
             key: 'logout',

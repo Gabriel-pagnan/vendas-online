@@ -13,6 +13,7 @@ import { firstRoutes } from './modules/home/houtes';
 import { categoryRoutes } from './modules/category/houtes';
 import { useGlobalReducer } from './store/reducers/globalReducer/useGlobalReducer';
 import { orderRoutes } from './modules/order/houtes';
+import { usersRoutes } from './modules/user/houtes';
 
 const routes: RouteObject[] = [...loginRoutes];
 const routesLoggedIn: RouteObject[] = [
@@ -20,6 +21,7 @@ const routesLoggedIn: RouteObject[] = [
   ...firstRoutes,
   ...categoryRoutes,
   ...orderRoutes,
+  ...usersRoutes,
 ].map((route) => ({
   ...route,
   loader: verifyLoggedIn,
