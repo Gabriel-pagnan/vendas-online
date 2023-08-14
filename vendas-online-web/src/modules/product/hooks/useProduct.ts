@@ -14,6 +14,7 @@ export const useProduct = () => {
     const { setNotification } = useGlobalReducer();
     const {products, setProducts} = useProductReducer();
     const [filterProduct, setFilterProduct] = useState<ProductType[]>([]);
+    const [productIdDelete, setProductIdDelete] = useState<number | undefined>();
 
     useEffect(() => {
         setFilterProduct([...products])
@@ -33,20 +34,33 @@ export const useProduct = () => {
         navigate(PathEnum.PRODUCT_INSERT)
     }
 
-    const handleDelete = async (productId: number) => {
-        await request(URL_PRODUCT_ID.replace('{productId}', `${productId}`), MethodsEnum.DELETE)
+    const handleDelete = async () => {
+        await request(URL_PRODUCT_ID.replace('{productId}', `${productIdDelete}`), MethodsEnum.DELETE)
             .then(() => {
                 setNotification('Produto deletado.', 'warning')
             })
             .catch((error: Error) => { setNotification(error.message, 'error') });
 
         await request<ProductType[]>(URL_PRODUCT, MethodsEnum.GET, setProducts);
+        setProductIdDelete(undefined);
     }
+
+    const handleCloseModal = () => {
+        setProductIdDelete(undefined);
+    };
+
+    const handleOpenModal = (productId: number) => {
+        setProductIdDelete(productId);
+    };
 
     return {
         onSearch,
         handleDelete,
         filterProduct,
+        productIdDelete,
+        handleOpenModal,
+        handleCloseModal,
         handleClickInsert,
+        openModalDelete: !!productIdDelete,
     }
 }

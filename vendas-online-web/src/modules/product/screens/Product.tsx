@@ -8,7 +8,7 @@ import { convertNumberToMoney } from "../../../shared/functions/money";
 import { Screen } from "../../../shared/components/screen/Screen";
 import { Button } from "../../../shared/components/buttons/button/Button";
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
-import { Input } from "antd";
+import { Input, Modal } from "antd";
 import { LimitedContainer } from "../../../shared/components/styles/limited.styled";
 import { DisplayFlexJustifyBetween } from "../../../shared/components/styles/display.styled";
 import { useProduct } from "../hooks/useProduct";
@@ -26,7 +26,7 @@ const listBreadcrum = [
 ]
 
 export const Product = () => {
-    const { handleClickInsert, onSearch, filterProduct, handleDelete } = useProduct();
+    const { handleClickInsert, onSearch, filterProduct, handleDelete, handleCloseModal, handleOpenModal, openModalDelete } = useProduct();
 
     const columns: ColumnsType<ProductType> = useMemo(() => (
         [
@@ -62,7 +62,7 @@ export const Product = () => {
                 dataIndex: '',
                 key: 'id',
                 render: (_, product) => 
-                <a onClick={() => handleDelete(product.id)}>
+                <a onClick={() => handleOpenModal(product.id)}>
                     <MdDelete size={24} color='#d33131'/>
                 </a>,
             }
@@ -81,6 +81,17 @@ export const Product = () => {
                 </LimitedContainer>
             </DisplayFlexJustifyBetween>
             <Table columns={columns} dataSource={filterProduct} rowKey='id' />
+
+            <Modal
+                title="Atenção"
+                open={openModalDelete}
+                onOk={handleDelete}
+                onCancel={handleCloseModal}
+                okText="Sim"
+                okType="danger"
+                cancelText="Cancelar">
+                <p>Tem certeza que deseja excluir esse produto?</p>
+            </Modal>
         </Screen>
     )
 }
