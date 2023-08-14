@@ -23,7 +23,7 @@ export class ProductService {
     ) { }
 
     async findAllPage(
-        search?: string, 
+        search?: string,
         size?: sizePage.SIZE_DEFAULT_PAGE,
         page?: sizePage.PAGE
     ): Promise<Pagination<ProductEntity[]>> {
@@ -48,7 +48,7 @@ export class ProductService {
             throw new NotFoundException('Not found produtcs')
         }
         return new Pagination(
-            new PaginationMeta(Number(size),total, Number(page), Math.ceil(total / size)), 
+            new PaginationMeta(Number(size), total, Number(page), Math.ceil(total / size)),
             products
         )
     }
@@ -67,7 +67,7 @@ export class ProductService {
         if (isFindRelations) {
             findOptions = {
                 ...findOptions,
-                order: {id: 'asc'},
+                order: { id: 'asc' },
                 relations: {
                     category: true
                 }
@@ -109,9 +109,10 @@ export class ProductService {
         return product
     }
 
-    async deleteProduct(id: number): Promise<DeleteResult> {
-        await this.findProductById(id)
-        return this.productRepository.delete(id);
+    async deleteProduct(productId: number): Promise<DeleteResult> {
+        await this.findProductById(productId);
+
+        return this.productRepository.delete({ id: productId });
     }
 
     async updateProduct(id: number, data: UpdateProductDTO): Promise<ProductEntity> {
