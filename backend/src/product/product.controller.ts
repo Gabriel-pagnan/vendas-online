@@ -14,7 +14,7 @@ import { Pagination } from '../DTOs/paginations.dto';
 export class ProductController {
     constructor(private readonly productService: ProductService) { }
 
-    @Roles(UserType.Root, UserType.User)
+    @Roles(UserType.Root, UserType.Admin)
     @Get()
     async findAll(): Promise<ReturnProductDTO[]> {
         return (
@@ -22,7 +22,7 @@ export class ProductController {
             )
     }
 
-    @Roles(UserType.Root, UserType.User)
+    @Roles(UserType.Root, UserType.Admin)
     @Get('/page')
     async findAllPage(
         @Query('search') search?: string, 
@@ -38,20 +38,20 @@ export class ProductController {
         return new ReturnProductDTO(await this.productService.findProductById(id, true))        
     }
 
-    @Roles(UserType.Root)
+    @Roles(UserType.Root, UserType.Admin)
     @UsePipes(ValidationPipe)
     @Post()
     async createProduct(@Body() data: CreateProductDTO): Promise<ProductEntity> {
         return this.productService.createProduct(data);
     }
 
-    @Roles(UserType.Root)
+    @Roles(UserType.Root, UserType.Admin)
     @Delete('/:id')
     async deleteProduct(@Param('id') id: number): Promise<DeleteResult> {
         return await this.productService.deleteProduct(id);
     }
 
-    @Roles(UserType.Root)
+    @Roles(UserType.Root, UserType.Admin)
     @UsePipes(ValidationPipe)
     @Put('/:id')
     async updateProduct(@Param('id') id: number, @Body() data: UpdateProductDTO): Promise<ProductEntity> {
