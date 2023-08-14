@@ -52,11 +52,11 @@ export const useInsertProduct = () => {
     return {
         product,
         loading,
-        disabledButton,
+        handleSave,
         handleCancel,
-        handleChangeSelect,
         onChangeInput,
-        handleSave
+        disabledButton,
+        handleChangeSelect,
     }
 
 }
