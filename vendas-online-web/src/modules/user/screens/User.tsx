@@ -11,6 +11,7 @@ import Search from "antd/es/input/Search";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "../../../shared/components/buttons/button/Button";
 import { useEffect, useState } from "react";
+import Loading from "../../../shared/components/loading/Loading";
 
 const listBreadcrum = [
     {
@@ -59,7 +60,7 @@ const columns: ColumnsType<UserType> = [
 
 export const User = () => {
     const { users, loading, handleClickInsert } = useUser();
-    const [filterUser, setFilterUser] = useState<UserType[]>([])
+    const [filterUser, setFilterUser] = useState<UserType[]>([])    
 
     useEffect(() => {
         setFilterUser([...users])
@@ -75,7 +76,7 @@ export const User = () => {
         <Screen listBreadcrumb={listBreadcrum}>
             {loading ? (
                 <DisplayFlexJustifyCenter>
-                    {/* <Loading size="large" /> */}
+                    <Loading size="large" />
                 </DisplayFlexJustifyCenter>
             ) : (
                 <>
