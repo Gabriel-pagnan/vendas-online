@@ -95,7 +95,7 @@ export const Product = () => {
                     <Button type="primary" icon={<PlusOutlined />} onClick={handleClickInsert}>INSERIR</Button>
                 </LimitedContainer>
             </DisplayFlexJustifyBetween>
-            <Table columns={columns} dataSource={filterProduct} />
+            <Table columns={columns} dataSource={filterProduct} rowKey='id'/>
         </Screen>
     )
 }

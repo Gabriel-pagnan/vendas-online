@@ -27,8 +27,6 @@ export const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
     const { order, loading } = useOrderDetail(orderId);
 
-    console.log(order);
-
     return (
         <Screen listBreadcrumb={listBreadcrum}>
             {!order || loading ? (

@@ -24,7 +24,7 @@ const columns: ColumnsType<OrderType> = [
         title: 'Usuário',
         dataIndex: 'user',
         key: 'user',
-        render: (_, target) => <a>{target.user?.name}</a>,
+        render: (_, target) => target.user?.name,
         sorter: (a, b) => a.user?.name.localeCompare(b.user?.name),
 
     },
@@ -56,7 +56,8 @@ export const Order = () => {
                     onClick: () => navigate(`${PathEnum.ORDER}/${record.id}`),
                 })}
                 columns={columns}
-                dataSource={orders} />
+                dataSource={orders}
+                rowKey='id' />
         </Screen>
     )
 }

@@ -43,6 +43,6 @@ export const ListOrderProduct = ({ ordersProduct }: IListOrderProduct) => {
     }
 
     return (
-        <Table columns={columns} dataSource={ordersProduct} />
+        <Table columns={columns} dataSource={ordersProduct} rowKey='id' />
     )
 }

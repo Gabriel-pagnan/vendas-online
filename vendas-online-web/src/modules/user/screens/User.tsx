@@ -96,7 +96,7 @@ export const User = () => {
                         </LimitedContainer>
                     </DisplayFlexJustifyBetween>
 
-                    <Table columns={columns} dataSource={filterUser} />
+                    <Table columns={columns} dataSource={filterUser} rowKey='id' />
                 </>
             )}
         </Screen>

@@ -6,9 +6,7 @@ import { useOrderReducer } from "../../../store/reducers/orderReducer/useProduct
 
 export const useOrderDetail = (orderId?: string) => {
     const {request, loading} = useRequests();
-    const {order, setOrder} = useOrderReducer();
-    console.log(order);
-    
+    const {order, setOrder} = useOrderReducer();    
 
     useEffect(() => {
         request(URL_ORDER_ID.replace('{orderId}', orderId || ''), MethodsEnum.GET, setOrder)

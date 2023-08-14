@@ -75,7 +75,7 @@ export const Category = () => {
                     <Button type="primary" icon={<PlusOutlined />} onClick={handleClickInsert}>INSERIR</Button>
                 </LimitedContainer>
             </DisplayFlexJustifyBetween>
-            <Table columns={columns} dataSource={filterCategory} />
+            <Table columns={columns} dataSource={filterCategory} rowKey='id' />
         </Screen>
     )
 }
