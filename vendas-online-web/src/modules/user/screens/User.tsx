@@ -10,8 +10,10 @@ import { LimitedContainer } from "../../../shared/components/styles/limited.styl
 import Search from "antd/es/input/Search";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button } from "../../../shared/components/buttons/button/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Loading from "../../../shared/components/loading/Loading";
+import { getUserInfo } from "../../../shared/functions/connection/auth";
+import { UserTypeEnum } from "../../../shared/enums/user-type.enum";
 
 const listBreadcrum = [
     {
@@ -60,7 +62,9 @@ const columns: ColumnsType<UserType> = [
 
 export const User = () => {
     const { users, loading, handleClickInsert } = useUser();
-    const [filterUser, setFilterUser] = useState<UserType[]>([])    
+    const [filterUser, setFilterUser] = useState<UserType[]>([])
+
+    const userToken = useMemo(() =>  getUserInfo(), [])
 
     useEffect(() => {
         setFilterUser([...users])
@@ -86,7 +90,9 @@ export const User = () => {
                         </LimitedContainer>
 
                         <LimitedContainer width={200}>
-                            <Button type="primary" icon={<PlusOutlined />} onClick={handleClickInsert}>NOVO CLIENTE</Button>
+                            {userToken?.typeUser === UserTypeEnum.Root && (
+                                <Button type="primary" color="#764582" icon={<PlusOutlined />} onClick={handleClickInsert}>NOVO ADMIN</Button>
+                            )}
                         </LimitedContainer>
                     </DisplayFlexJustifyBetween>
 

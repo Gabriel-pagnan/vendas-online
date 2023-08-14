@@ -5,12 +5,22 @@ import { connectionAPIGet } from "./connetionAPI";
 import { UserType } from "../../../modules/login/types/UserType";
 import { URL_USER } from "../../constants/urls";
 import { PathEnum } from "../../enums/paths.enum";
+import { UserTokenType } from "../../../modules/login/types/UserTokenType";
 
 export const unsetAuthorizationToken = () => removeItemStorage(AUTHORIZATION_KEY);
 
 export const setAuthorizationToken = (token?: string) => {
     if (token) setItemStorage(AUTHORIZATION_KEY, token)
 };
+
+export const getUserInfo = (): UserTokenType | undefined => {
+    const token = getAuthorizationToken();
+    const tokenSplited = token?.split('.');
+
+    if(tokenSplited && tokenSplited.length > 1){
+        return JSON.parse(window.atob(tokenSplited[1]));
+    }   
+}
 
 export const getAuthorizationToken = () => getItemStorage(AUTHORIZATION_KEY);
 
