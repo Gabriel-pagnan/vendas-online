@@ -6,7 +6,7 @@ import { Button } from "../../../shared/components/buttons/button/Button"
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons"
 import { Select } from "../../../shared/components/inputs/select/Select"
 import { LimitedContainer } from "../../../shared/components/styles/limited.styled"
-import { DisplayFlexJustifyRight } from "../../../shared/components/styles/display.styled"
+import { DisplayFlex, DisplayFlexJustifyRight } from "../../../shared/components/styles/display.styled"
 import { InputMoney } from "../../../shared/components/inputs/inputMoney/InputMoney"
 import { useInsertProduct } from "../hooks/useInsertProduct"
 import { useCategory } from "../../category/hooks/useCategory"
@@ -25,8 +25,8 @@ const listBreadcrumb = [
 ]
 
 export const ProductInsert = () => {
-    const {categories} = useCategory();
-    const {handleCancel, handleSave, onChangeInput, handleChangeSelect, disabledButton, loading, product} = useInsertProduct();
+    const { categories } = useCategory();
+    const { handleCancel, handleSave, onChangeInput, handleChangeSelect, disabledButton, loading, product } = useInsertProduct();
 
 
     return (
@@ -36,7 +36,7 @@ export const ProductInsert = () => {
 
                     <Input onChange={(e) => onChangeInput(e, 'name')} value={product.name} title="Nome" />
                     <Input onChange={(e) => onChangeInput(e, 'image')} value={product.image} title="URL Imagem" />
-                    <InputMoney onChange={(e) => onChangeInput(e, 'price', true)} value={product.price}  title="Preço"/>
+                    <InputMoney onChange={(e) => onChangeInput(e, 'price', true)} value={product.price} title="Preço" />
 
                     <Select
                         title="Categorias"
@@ -49,6 +49,16 @@ export const ProductInsert = () => {
                         }
                     />
 
+                    <InputMoney onChange={(e) => onChangeInput(e, 'diameter', true)} value={product.diameter} title="Diâmetro" margin="10px 0 16px 0" />
+                    <DisplayFlex>
+                        <InputMoney onChange={(e) => onChangeInput(e, 'weight', true)} value={product.weight} title="Peso" margin="10px 16px 16px 0" />
+                        <InputMoney onChange={(e) => onChangeInput(e, 'length', true)} value={product.length} title="Comprimento" margin="10px 0 16px 0" />
+                    </DisplayFlex>
+                    <DisplayFlex>
+                        <InputMoney onChange={(e) => onChangeInput(e, 'width', true)} value={product.width} title="Largura" margin="10px 16px 16px 0" />
+                        <InputMoney onChange={(e) => onChangeInput(e, 'height', true)} value={product.height} title="Altura" margin="10px 0 16px 0" />
+                    </DisplayFlex>
+                    
                     <DisplayFlexJustifyRight>
                         <LimitedContainer width={120} margin="0 20px 20px">
                             <Button onClick={handleCancel} margin="20px 0" danger icon={<CloseOutlined />}>Cancelar</Button>

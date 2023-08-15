@@ -10,9 +10,18 @@ import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGloba
 export const useInsertProduct = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [disabledButton, setDisabledButton] = useState<boolean>(true);
-    const [product, setProduct] = useState<InsertProductDTO>({ name: '', price: 0, image: '', })
     const { setNotification } = useGlobalReducer();
     const navigate = useNavigate();
+    const [product, setProduct] = useState<InsertProductDTO>({ 
+        name: '', 
+        price: 0, 
+        image: '', 
+        weight: 0,
+        height: 0,
+        length: 0,
+        width: 0,
+        diameter: 0
+    });
 
     useEffect(() => {
         if (product.name && product.categoryId && product.image && product.price > 0) {
