@@ -7,12 +7,11 @@ import { TooltipImage } from "../components/TooltipImage";
 import { convertNumberToMoney } from "../../../shared/functions/money";
 import { Screen } from "../../../shared/components/screen/Screen";
 import { Button } from "../../../shared/components/buttons/button/Button";
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { Input, Modal } from "antd";
 import { LimitedContainer } from "../../../shared/components/styles/limited.styled";
-import { DisplayFlexJustifyBetween } from "../../../shared/components/styles/display.styled";
+import { DisplayFlex, DisplayFlexJustifyBetween } from "../../../shared/components/styles/display.styled";
 import { useProduct } from "../hooks/useProduct";
-import { MdDelete } from "react-icons/md";
 
 const { Search } = Input;
 
@@ -26,7 +25,7 @@ const listBreadcrum = [
 ]
 
 export const Product = () => {
-    const { handleClickInsert, onSearch, filterProduct, handleDelete, handleCloseModal, handleOpenModal, openModalDelete } = useProduct();
+    const { handleClickInsert, onSearch, filterProduct, handleDelete, handleCloseModal, handleOpenModal, openModalDelete, handleEdit } = useProduct();
 
     const columns: ColumnsType<ProductType> = useMemo(() => (
         [
@@ -61,10 +60,20 @@ export const Product = () => {
                 title: 'Ações',
                 dataIndex: '',
                 key: 'id',
-                render: (_, product) => 
-                <a onClick={() => handleOpenModal(product.id)}>
-                    <MdDelete size={24} color='#d33131'/>
-                </a>,
+                width: 240,
+                render: (_, product) => (
+                    <LimitedContainer width={95}>
+                        <DisplayFlex>
+                            <Button type="primary" margin="0 10px"  onClick={() => handleEdit(product.id)} icon={<EditOutlined />}>
+                                Editar
+                            </Button>
+                            <Button type="primary" danger style={{ marginLeft: '10px' }} onClick={() => handleOpenModal(product.id)} icon={<DeleteOutlined />}>
+                                Excluir
+                            </Button>
+                        </DisplayFlex>
+                    </LimitedContainer>
+                )
+
             }
         ]
     ), []);

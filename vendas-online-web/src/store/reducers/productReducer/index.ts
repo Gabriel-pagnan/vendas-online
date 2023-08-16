@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ProductType } from '../../../shared/types/ProductType'
 
 interface ProductState {
-    products: ProductType[]
+    products: ProductType[];
+    product?: ProductType
 }
 
 const initialState: ProductState = {
     products: [],
+    product: undefined
 }
 
 export const counterSlice = createSlice({
@@ -16,9 +18,12 @@ export const counterSlice = createSlice({
         setProductsActions: (state, action: PayloadAction<ProductType[]>) => {
             state.products = action.payload
         },
+        setProductActions: (state, action: PayloadAction<ProductType | undefined>) => {
+            state.product = action.payload
+        },
     },
 })
 
-export const { setProductsActions } = counterSlice.actions
+export const { setProductsActions, setProductActions } = counterSlice.actions
 
 export default counterSlice.reducer

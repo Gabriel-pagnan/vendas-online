@@ -15,4 +15,9 @@ export const productRoutes: RouteObject[] = [
         element: <ProductInsert />,
         errorElement: <NotFound />
     },
+    {
+        path: PathEnum.PRODUCT_EDIT,
+        element: <ProductInsert />,
+        errorElement: <NotFound />
+    },
 ];

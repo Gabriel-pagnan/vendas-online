@@ -45,6 +45,11 @@ export const useProduct = () => {
         setProductIdDelete(undefined);
     }
 
+    const handleEdit = async (productId: number) => {
+        navigate(PathEnum.PRODUCT_EDIT.replace(':productId', `${productId}`))
+        
+    }
+
     const handleCloseModal = () => {
         setProductIdDelete(undefined);
     };
@@ -55,6 +60,7 @@ export const useProduct = () => {
 
     return {
         onSearch,
+        handleEdit,
         handleDelete,
         filterProduct,
         productIdDelete,

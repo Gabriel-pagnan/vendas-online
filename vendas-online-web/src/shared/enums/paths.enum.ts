@@ -1,6 +1,7 @@
 export enum PathEnum {
     PRODUCT = '/product',
     PRODUCT_INSERT = '/product/insert',
+    PRODUCT_EDIT = '/product/:productId',
     LOGIN = '/login',
     FIRST_SCREEN = '/home',
     CATEGORY = '/category',

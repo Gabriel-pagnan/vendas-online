@@ -6,16 +6,16 @@ interface ICategoryColummProps {
 }
 
 const colors: string[] = [
-    '#3b953b',
-    '#d33131',
+    'green',
+    'red',
     '#d7a240',
-    '#d98f3f',
-    '#236b9e ',
+    'orange',
+    'blue',
     '#3fcece',
-    '#d439d4',
+    'pink',
     '#2e91d7',
     '#35a2d5',
-    ' #992799',
+    ' purple',
     '#9add7e',
 ];
 
@@ -25,8 +25,6 @@ export const CategoryColumm = ({ category }: ICategoryColummProps) => {
     const currentColor = colors[category.id - 1] || colors[0];
 
     return (
-        <Space size={[0, 8]} wrap>
-            <Tag color={currentColor}>{category.name}</Tag>
-        </Space>
+        <Tag color={currentColor}>{category.name}</Tag>
     );
 }
