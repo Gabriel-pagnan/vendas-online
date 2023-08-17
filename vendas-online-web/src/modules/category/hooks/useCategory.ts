@@ -14,7 +14,6 @@ export const useCategory = () => {
     const { categories, setCategories } = useCategoryReducer();
     const [categoryDelete, setCategoryDelete] = useState<number | undefined>()
 
-
     const handleClickInsert = () => {
         navigate(PathEnum.CATEGORY_INSERT)
     }
@@ -44,12 +43,17 @@ export const useCategory = () => {
         setCategoryDelete(undefined)
     }
 
+    const handleEditCategory = (categoryId: number) => {
+        navigate(PathEnum.CATEGORY_EDIT.replace(':categoryId', `${categoryId}`))
+    }
+
     return {
         categories,
         confirmDelete,
         handleOpenModal,
         handleCloseModal,
         handleClickInsert,
+        handleEditCategory,
         openModal: !!categoryDelete,
     }
 }

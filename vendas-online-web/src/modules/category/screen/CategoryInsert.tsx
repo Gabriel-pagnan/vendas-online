@@ -6,40 +6,46 @@ import { DisplayFlexJustifyCenter, DisplayFlexJustifyRight } from "../../../shar
 import { LimitedContainer } from "../../../shared/components/styles/limited.styled"
 import { PathEnum } from "../../../shared/enums/paths.enum"
 import { useInsertCategory } from "../hooks/useInsertCategory"
-
-const listBreadcrum = [
-    {
-        name: 'HOME',
-    },
-    {
-        name: 'CATEGORIAS',
-        navigateTo: PathEnum.CATEGORY
-    },
-    {
-        name: 'INSERIR CATEGORIA'
-    }
-]
+import Loading from "../../../shared/components/loading/Loading"
 
 export const CategoryInsert = () => {
-    const {handleSave, loading, name, onChangeName, handleCancel, disabledButton} = useInsertCategory()
+    const { handleSave, loading, name, onChangeName, handleCancel, disabledButton, categoryId } = useInsertCategory()
 
     return (
-        <Screen listBreadcrumb={listBreadcrum}>
+        <Screen listBreadcrumb={[
+            {
+                name: 'HOME',
+            },
+            {
+                name: 'CATEGORIAS',
+                navigateTo: PathEnum.CATEGORY
+            },
+            {
+                name: categoryId ? 'EDITAR' : 'INSERIR'
+            }
+        ]}>
             <DisplayFlexJustifyCenter>
-                <LimitedContainer width={400}>
-                    <Input title="Nome" onChange={onChangeName} value={name} />
+                {loading && categoryId ? (
+                    <DisplayFlexJustifyCenter>
+                        <Loading size="large" />
+                    </DisplayFlexJustifyCenter>
+                ) : (
+                    
+                    < LimitedContainer width={400}>
+                        <Input title="Nome" onChange={onChangeName} value={name} />
 
-                    <DisplayFlexJustifyRight>
-                        <LimitedContainer width={120} margin="0 20px 20px">
-                            <Button margin="20px 0" onClick={handleCancel} danger icon={<CloseOutlined />}>Cancelar</Button>
-                        </LimitedContainer>
+                        <DisplayFlexJustifyRight>
+                            <LimitedContainer width={120} margin="0 20px 20px">
+                                <Button margin="20px 0" onClick={handleCancel} danger icon={<CloseOutlined />}>Cancelar</Button>
+                            </LimitedContainer>
 
-                        <LimitedContainer width={120}>
-                            <Button onClick={handleSave} disabled={disabledButton} loading={loading} margin="20px 0" type="primary" icon={<CheckOutlined />}>Salvar</Button>
-                        </LimitedContainer>
-                    </DisplayFlexJustifyRight>
-                </LimitedContainer>
+                            <LimitedContainer width={120}>
+                                <Button onClick={handleSave} disabled={disabledButton} loading={loading} margin="20px 0" type="primary" icon={<CheckOutlined />}>{categoryId ? 'Salvar' : 'Inserir'}</Button>
+                            </LimitedContainer>
+                        </DisplayFlexJustifyRight>
+                    </LimitedContainer>
+                )}
             </DisplayFlexJustifyCenter>
-        </Screen>
+        </Screen >
     )
 }

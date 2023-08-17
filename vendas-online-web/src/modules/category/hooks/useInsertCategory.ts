@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { PathEnum } from "../../../shared/enums/paths.enum";
-import { URL_CATEGORY } from "../../../shared/constants/urls";
-import { useNavigate } from "react-router-dom";
+import { URL_CATEGORY, URL_CATEGORY_ID } from "../../../shared/constants/urls";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRequests } from "../../../shared/hooks/useRequests";
 import { MethodsEnum } from "../../../shared/enums/methods.enum";
 import { useCategoryReducer } from "../../../store/reducers/categoryReducer/useCategoryReducer";
@@ -9,12 +9,18 @@ import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGloba
 
 export const useInsertCategory = () => {
     const navigate = useNavigate();
-    const {request} = useRequests();
-    const {setCategories} = useCategoryReducer();
+    const {request, loading} = useRequests();
+    const {setCategories, setCategory, category} = useCategoryReducer();
     const [name, setName] = useState<string>('');
     const { setNotification } = useGlobalReducer();
-    const [loading, setLoading] = useState<boolean>(false);
     const [disabledButton, setDisabledButton] = useState<boolean>(true);
+    const { categoryId } = useParams<{ categoryId: string }>();
+
+    useEffect(() => {
+        if(category) {
+            setName(category.name)
+        }
+    }, [category])
 
     useEffect(() => {
         if (name) {
@@ -22,19 +28,31 @@ export const useInsertCategory = () => {
         } else {
             setDisabledButton(true);
         }
-    }, [name])
+    }, [name]);
+
+    useEffect(() => {
+        if(categoryId) {
+            request(URL_CATEGORY_ID.replace('{categoryId}', categoryId), MethodsEnum.GET, setCategory)
+        } else {
+            setName('')
+        }
+    }, [categoryId])
 
     const handleSave = async () => {
-        setLoading(true)
-        await request(URL_CATEGORY, MethodsEnum.POST, undefined, {name})
+        if(categoryId) {
+            await request(URL_CATEGORY_ID.replace('{categoryId}', categoryId), MethodsEnum.PUT, undefined, {name})
+            .then(() => {
+                setNotification('Categoria salva.', 'success')
+                navigate(PathEnum.CATEGORY)
+            });
+        } else {
+            await request(URL_CATEGORY, MethodsEnum.POST, undefined, {name})
             .then(() => {
                 setNotification('Categoria cadastrada.', 'success')
                 navigate(PathEnum.CATEGORY)
             });
-
+        }
         await request(URL_CATEGORY, MethodsEnum.GET, setCategories)
-        
-        setLoading(false)
     }
 
     const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,9 +66,10 @@ export const useInsertCategory = () => {
     return {
         name,
         loading,
-        disabledButton,
-        onChangeName,
+        categoryId,
         handleSave,
-        handleCancel
+        handleCancel,
+        onChangeName,
+        disabledButton,
     }
 }

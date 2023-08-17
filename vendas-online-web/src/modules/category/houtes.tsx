@@ -15,4 +15,9 @@ export const categoryRoutes: RouteObject[] = [
         element: <CategoryInsert />,
         errorElement: <NotFound />
     },
+    {
+        path: PathEnum.CATEGORY_EDIT,
+        element: <CategoryInsert />,
+        errorElement: <NotFound />
+    },
 ];

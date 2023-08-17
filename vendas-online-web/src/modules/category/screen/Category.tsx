@@ -23,7 +23,7 @@ const listBreadcrum = [
 
 export const Category = () => {
     const [filterCategory, setFilterCategory] = useState<CategoryType[]>([])
-    const { categories, handleClickInsert, handleCloseModal, handleOpenModal, confirmDelete, openModal } = useCategory();
+    const { categories, handleClickInsert, handleCloseModal, handleOpenModal, confirmDelete, openModal, handleEditCategory } = useCategory();
 
 
     const columns: ColumnsType<CategoryType> = [
@@ -56,7 +56,7 @@ export const Category = () => {
             render: (_, category) => (
                 <LimitedContainer width={95}>
                     <DisplayFlex>
-                        <Button type="primary" margin="0 10px" onClick={() => { }} icon={<EditOutlined />}>
+                        <Button type="primary" margin="0 10px" onClick={() => handleEditCategory(category.id)} icon={<EditOutlined />}>
                             Editar
                         </Button>
                         {category.amountProducts <= 0 && (
