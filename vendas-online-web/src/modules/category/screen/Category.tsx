@@ -4,37 +4,13 @@ import Table from "../../../shared/components/tables/Table"
 import { CategoryType } from "../../../shared/types/CategoryTypes";
 import { useCategory } from "../hooks/useCategory";
 import { Button } from "../../../shared/components/buttons/button/Button";
-import { PlusOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import { PathEnum } from "../../../shared/enums/paths.enum";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { LimitedContainer } from "../../../shared/components/styles/limited.styled";
-import { Input } from "antd";
+import { Input, Modal } from "antd";
 import { useEffect, useState } from "react";
-import { DisplayFlexJustifyBetween } from "../../../shared/components/styles/display.styled";
+import { DisplayFlex, DisplayFlexJustifyBetween } from "../../../shared/components/styles/display.styled";
 
 const { Search } = Input;
-const columns: ColumnsType<CategoryType> = [
-    {
-        title: 'Id',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text) => text,
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => text,
-        sorter: (a, b) => a.name.localeCompare(b.name),
-
-    },
-    {
-        title: 'Qnt Produtos',
-        dataIndex: 'amountProducts',
-        key: 'amountProducts',
-        render: (text) => text,
-    }
-];
 
 const listBreadcrum = [
     {
@@ -47,17 +23,58 @@ const listBreadcrum = [
 
 export const Category = () => {
     const [filterCategory, setFilterCategory] = useState<CategoryType[]>([])
-    const { categories } = useCategory();
-    const navigate = useNavigate()
+    const { categories, handleClickInsert, handleCloseModal, handleOpenModal, confirmDelete, openModal } = useCategory();
 
-    const handleClickInsert = () => {
-        navigate(PathEnum.CATEGORY_INSERT)
-    }
+
+    const columns: ColumnsType<CategoryType> = [
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text) => text,
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            render: (text) => text,
+            sorter: (a, b) => a.name.localeCompare(b.name),
+
+        },
+        {
+            title: 'Qnt Produtos',
+            dataIndex: 'amountProducts',
+            key: 'amountProducts',
+            render: (text) => text,
+            sorter: (a, b) => a.amountProducts - b.amountProducts,
+        },
+        {
+            title: 'Ações',
+            dataIndex: '',
+            key: 'id',
+            width: 240,
+            render: (_, category) => (
+                <LimitedContainer width={95}>
+                    <DisplayFlex>
+                        <Button type="primary" margin="0 10px" onClick={() => { }} icon={<EditOutlined />}>
+                            Editar
+                        </Button>
+                        {category.amountProducts <= 0 && (
+                            <Button type="primary" danger style={{ marginLeft: '10px' }} onClick={() => handleOpenModal(category.id)} icon={<DeleteOutlined />}>
+                                Excluir
+                            </Button>
+                        )}
+                    </DisplayFlex>
+                </LimitedContainer>
+            )
+
+        }
+    ];
 
     useEffect(() => {
         setFilterCategory([...categories])
     }, [categories]);
-    
+
     const onSearch = (value: string) => {
         setFilterCategory([
             ...categories.filter((category) => category.name.toUpperCase().includes(value.toUpperCase()))
@@ -76,6 +93,17 @@ export const Category = () => {
                 </LimitedContainer>
             </DisplayFlexJustifyBetween>
             <Table columns={columns} dataSource={filterCategory} rowKey='id' />
+
+            <Modal
+                title="Atenção"
+                open={openModal}
+                onOk={confirmDelete}
+                onCancel={handleCloseModal}
+                okText="Sim"
+                okType="danger"
+                cancelText="Cancelar">
+                <p>Tem certeza que deseja excluir essa categoria?</p>
+            </Modal>
         </Screen>
     )
 }
