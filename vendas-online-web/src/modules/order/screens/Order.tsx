@@ -5,6 +5,7 @@ import { OrderType } from "../../../shared/types/OrderType";
 import Table from "../../../shared/components/tables/Table";
 import { useNavigate } from "react-router-dom";
 import { PathEnum } from "../../../shared/enums/paths.enum";
+import { convertDate } from "../../../shared/functions/date";
 
 const columns: ColumnsType<OrderType> = [
     {
@@ -14,10 +15,10 @@ const columns: ColumnsType<OrderType> = [
         render: (text) => text,
     },
     {
-        title: 'Data',
+        title: 'Data do pedido',
         dataIndex: 'date',
         key: 'date',
-        render: (text) => <a>{text}</a>,
+        render: (text) => <a>{convertDate(text)}</a>,
         // sorter: (a, b) => a.date - b.date,
     },
     {

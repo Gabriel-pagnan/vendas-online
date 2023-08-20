@@ -9,15 +9,15 @@ html {
     background-color: #f7f6f3;
 }
 
-.input {
+.inputLogin {
     padding: 12px; 
-    background: #edebeb; 
+    background: #e9e8e8; 
     border: none;
     border-radius: 3px;
     font-size: 16px;
     color: #333333;
 }
-.input:focus {
+.inputLogin:focus {
     border: none !important;
     outline: none !important;
 }

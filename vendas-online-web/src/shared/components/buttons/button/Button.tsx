@@ -3,11 +3,12 @@ import { BoxButton } from './button.style';
 
 interface IButtonCurrentProps extends ButtonProps {
     margin?: string;
-    color?: string
+    color?: string;
+    height?: string
 }
 
-export const Button = ({ margin, color, ...props }: IButtonCurrentProps) => {
+export const Button = ({ margin, height, color, ...props }: IButtonCurrentProps) => {
     return (
-        <BoxButton {...props} style={{background: `${color}`, margin}}/>
+        <BoxButton {...props} style={{background: `${color}`, margin, height}}/>
     );
 }

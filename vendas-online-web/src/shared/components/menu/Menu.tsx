@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { MenuProps } from 'antd';
-import { Menu as MenuAntd, Modal } from 'antd';
+import { Image, Menu as MenuAntd, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { BiSolidCategory } from 'react-icons/bi';
 import { CgLogOff } from 'react-icons/cg';
@@ -9,13 +9,15 @@ import { FaUserTie, FaHome, FaBoxOpen, FaShoppingCart } from 'react-icons/fa';
 import { PathEnum } from '../../enums/paths.enum';
 import { logout } from '../../functions/connection/auth';
 import { ContainerLogoName, ContainerMenu, NameCompany } from './menu.style';
+import { useGlobalReducer } from '../../../store/reducers/globalReducer/useGlobalReducer';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 export const Menu = () => {
     const navigate = useNavigate();
-    const [current, setCurrent] = useState('1');
+    const {user} = useGlobalReducer();
     const [open, setOpen] = useState(false);
+    const [current, setCurrent] = useState('1');
 
     const items: MenuItem[] = [
         {
@@ -100,20 +102,22 @@ export const Menu = () => {
     const hideModal = () => {
         setOpen(false);
     };
+    console.log(user);
+    
 
     return (
         <ContainerMenu>
             <ContainerLogoName>
-                {/* <LogoMenu /> */}
-                <NameCompany>Vendas Online</NameCompany>
+                <Image width={50} src='public/iconMenu.png' />
+                <NameCompany>Olá {user?.name}</NameCompany>
             </ContainerLogoName>
-            <MenuAntd
+            <MenuAntd 
                 theme="dark"
                 onClick={onClick}
                 style={{ width: 240, background: '#313333', color: 'white' }}
                 defaultOpenKeys={['sub1']}
                 selectedKeys={[current]}
-                mode="inline"
+                mode="inline" 
                 items={items}
             />
             <Modal

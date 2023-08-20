@@ -29,9 +29,9 @@ export const LoginScreen = () => {
 
                     <LimitedContainer>
                         <TitleLogin level={2} type="secondary" style={{ color: '#764582' }}>LOGIN</TitleLogin>
-                        <Input title="Usuário" onChange={handleEmail} value={email} />
-                        <Input title="Senha" type="password" onChange={handlePassword} value={password} />
-                        <Button loading={loading} type="primary" onClick={handleLogin} color="#764582" margin="50px">ENTRAR</Button>
+                        <Input className="inputLogin" title="Usuário" onChange={handleEmail} value={email} />
+                        <Input className="inputLogin" title="Senha" type="password" onChange={handlePassword} value={password} />
+                        <Button loading={loading} type="primary" onClick={handleLogin} color="#764582" margin="50px" height="45px">ENTRAR</Button>
                     </LimitedContainer>
 
                 </ContainerLogin>

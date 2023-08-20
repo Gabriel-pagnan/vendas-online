@@ -1,8 +1,6 @@
 import { Typography } from 'antd';
 import styled from 'styled-components';
 
-// import SVGLogo from '../icons/SVGLogo';
-
 const { Text } = Typography;
 
 export const ContainerMenu = styled.div`
@@ -11,7 +9,6 @@ export const ContainerMenu = styled.div`
   top: 0;
   bottom: 0;
   background-color: #313333;
-
   width: 240px;
 
   -webkit-box-shadow: 1px 0px 8px 0px rgba(0, 0, 0, 0.71);
@@ -24,18 +21,12 @@ export const ContainerLogoName = styled.div`
   height: 72px;
   display: flex;
   align-items: center;
-
-  -webkit-box-shadow: -2px 6px 4px 0px rgba(0, 0, 0, 0.47);
-  -moz-box-shadow: -2px 6px 4px 0px rgba(0, 0, 0, 0.47);
-  box-shadow: -2px 6px 4px 0px rgba(0, 0, 0, 0.47);
+  justify-content: center;
+  gap: 15px;
+  margin: 0 0 30px 0;
 `;
 
-// export const LogoMenu = styled(SVGLogo)`
-//   width: 50px;
-//   height: 50px;
-//   margin: 0px 16px;
-// `;
-
 export const NameCompany = styled(Text)`
+  font-size: 16px;
   color: white;
 `;
