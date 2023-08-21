@@ -101,14 +101,12 @@ export const Menu = () => {
 
     const hideModal = () => {
         setOpen(false);
-    };
-    console.log(user);
-    
+    };    
 
     return (
         <ContainerMenu>
             <ContainerLogoName>
-                <Image width={50} src='public/iconMenu.png' />
+                <Image width={50} src='/iconMenu.png' />
                 <NameCompany>Olá {user?.name}</NameCompany>
             </ContainerLogoName>
             <MenuAntd 

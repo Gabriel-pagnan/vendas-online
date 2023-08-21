@@ -33,14 +33,14 @@ export const Product = () => {
                 title: 'Id',
                 dataIndex: 'id',
                 key: 'id',
-                render: (_, product) => <TooltipImage product={product} />,
+                render: (text) => text,
             },
             {
                 title: 'Name',
                 dataIndex: 'name',
                 key: 'name',
-                render: (text) => text,
                 sorter: (a, b) => a.name.localeCompare(b.name),
+                render: (_, product) => <a><TooltipImage product={product} /></a>,
 
             },
             {

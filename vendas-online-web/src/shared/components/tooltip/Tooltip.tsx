@@ -7,9 +7,9 @@ interface ITooltipProps {
     title?: string
 }
 
-export const Tooltip = ({children, tooltip, title}: ITooltipProps) => {
-    if(title) {
-        <TooltipAntd title={title}>{children}</TooltipAntd>
+export const Tooltip = ({ children, tooltip, title }: ITooltipProps) => {
+    if (title) {
+        return <TooltipAntd title={title}>{children}</TooltipAntd>
     }
 
     return (

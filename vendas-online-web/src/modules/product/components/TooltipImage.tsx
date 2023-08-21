@@ -9,7 +9,7 @@ interface ITooltipImageProps {
 export const TooltipImage = ({ product }: ITooltipImageProps) => {
     return (
         <Tooltip tooltip={<ImageProduct src={product.image} /> } >
-            <span>{product.id}</span>
+            <span>{product.name}</span>
         </Tooltip>
     );
 };
