@@ -41,12 +41,9 @@ export class ProductService {
         const [products, total] = await this.productRepository.findAndCount({
             ...findOptions,
             take: size,
-            skip
+            skip,
         });
 
-        if (!products || products.length === 0) {
-            throw new NotFoundException('Not found produtcs')
-        }
         return new Pagination(
             new PaginationMeta(Number(size), total, Number(page), Math.ceil(total / size)),
             products
